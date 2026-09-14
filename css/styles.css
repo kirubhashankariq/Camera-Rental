@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mesh-bg-1: #3b82f6;
+  --mesh-bg-2: #8b5cf6;
+  --mesh-bg-3: #ec4899;
+}
+
+.dark {
+  --mesh-bg-1: #1e3a8a;
+  --mesh-bg-2: #4c1d95;
+  --mesh-bg-3: #831843;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f8fafc;
+  color: #0f172a;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: #020617;
+  color: #f8fafc;
+}
+
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.15;
+  background: radial-gradient(at 0% 0%, var(--mesh-bg-1) 0px, transparent 50%),
+              radial-gradient(at 100% 0%, var(--mesh-bg-2) 0px, transparent 50%),
+              radial-gradient(at 100% 100%, var(--mesh-bg-3) 0px, transparent 50%);
+  filter: blur(80px);
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+.dark .mesh-bg { opacity: 0.3; }
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.neumorphic-card {
+  background: #f1f5f9;
+  box-shadow: 8px 8px 16px #d1d5db, -8px -8px 16px #ffffff;
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+.dark .neumorphic-card {
+  background: #0f172a;
+  box-shadow: 8px 8px 16px #070a13, -8px -8px 16px #172441;
+}
+.neumorphic-card:hover {
+  box-shadow: 12px 12px 20px #d1d5db, -12px -12px 20px #ffffff;
+}
+.dark .neumorphic-card:hover {
+  box-shadow: 12px 12px 20px #070a13, -12px -12px 20px #172441;
+}
+
+.clay-btn {
+  background: #3b82f6;
+  color: white;
+  border-radius: 9999px;
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.2), 
+              -8px -8px 16px rgba(255,255,255,0.1),
+              inset 4px 4px 8px rgba(255,255,255,0.3),
+              inset -4px -4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.clay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.25), 
+              -10px -10px 20px rgba(255,255,255,0.1),
+              inset 4px 4px 8px rgba(255,255,255,0.4),
+              inset -4px -4px 8px rgba(0,0,0,0.25);
+}
+
+.clay-card {
+  background: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 15px 15px 30px rgba(0,0,0,0.05),
+              -15px -15px 30px rgba(255,255,255,0.8),
+              inset 4px 4px 10px rgba(255,255,255,0.5),
+              inset -4px -4px 10px rgba(0,0,0,0.02);
+  transition: all 0.3s;
+}
+.dark .clay-card {
+  background: #1e293b;
+  box-shadow: 15px 15px 30px rgba(0,0,0,0.4),
+              -15px -15px 30px rgba(255,255,255,0.02),
+              inset 4px 4px 10px rgba(255,255,255,0.05),
+              inset -4px -4px 10px rgba(0,0,0,0.1);
+}
+.clay-card:hover { transform: translateY(-5px); }
+
+.bg-4k-1 { background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
+.bg-4k-2 { background-image: url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
+.bg-4k-3 { background-image: url('https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
+.bg-4k-4 { background-image: url('https://images.unsplash.com/photo-1527011045974-4569cc060411?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }

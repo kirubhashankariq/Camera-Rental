@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniLens | Equipment Catalog</title>
+    <!-- Custom Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 15a3 3 0 100-6 3 3 0 000 6z'/><path fill-rule='evenodd' d='M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z' clip-rule='evenodd'/></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { brand: '#3b82f6', brandDark: '#2563eb', darkBase: '#0f172a', darkCard: '#1e293b' },
+                    animation: { 'spin-slow': 'spin 12s linear infinite' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Omnimorphic CSS Architecture -->
+    <style>
+        html {
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        html.dark {
+            background-color: #0f172a;
+        }
+
+        /* Prevent position:fixed breaking by keeping transform off the body */
+        main,
+        footer {
+            animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        nav {
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+
+        @keyframes smoothLoad {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        html:not(.dark) .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        /* Omni-Card */
+        .omni-card {
+            position: relative;
+            background-color: #1e293b;
+            border-radius: 1.5rem;
+            z-index: 1;
+            box-shadow: 10px 10px 20px #131a25, -10px -10px 20px #293851;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html:not(.dark) .omni-card {
+            background-color: #f1f5f9;
+            box-shadow: 10px 10px 20px #cbd5e1, -10px -10px 20px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .omni-card::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 1.6rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            z-index: -1;
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 0.5s ease;
+        }
+
+        .omni-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .omni-card:hover::before {
+            opacity: 0.6;
+        }
+
+        /* Claymorphism Buttons */
+        .clay-btn {
+            background: #3b82f6;
+            border-radius: 1rem;
+            color: white;
+            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.3), inset -4px -4px 8px rgba(0, 0, 0, 0.2), 6px 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .clay-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.3), 8px 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Nav Link Hover */
+        .premium-nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            z-index: 1;
+            transition: color 0.3s, text-shadow 0.3s;
+            font-weight: 700;
+        }
+
+        .premium-nav-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 9999px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .premium-nav-link:hover::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .premium-nav-link:hover {
+            color: #3b82f6;
+            text-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Typography & Utilities */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Hide scrollbar for horizontal scroll areas */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <!-- Theme Script -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    </script>
+</head>
+
+<body class="antialiased transition-colors duration-300 text-gray-900 dark:text-gray-100 overflow-x-hidden" dir="ltr">
+
+    <!-- Fully Fixed Responsive Navigation -->
+    <nav
+        class="fixed top-0 left-0 w-full z-[9999] bg-white/80 dark:bg-[#0f172a]/90 backdrop-blur-2xl transition-all duration-300 border-b border-gray-200 dark:border-white/10 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center gap-3 text-2xl font-black group">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                <path fill-rule="evenodd"
+                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-gradient tracking-tight">OmniLens</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Links -->
+                <div class="hidden xl:block">
+                    <div class="ml-6 flex items-center space-x-1">
+                        <div class="relative group py-4">
+                            <button class="premium-nav-link inline-flex items-center gap-2 whitespace-nowrap">
+                                Home <i
+                                    class="fas fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform duration-300"></i>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 w-48 rounded-2xl glass-panel bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-2 overflow-hidden border border-gray-200 dark:border-white/20 shadow-2xl">
+                                <a href="index.html"
+                                    class="block px-6 py-4 text-sm font-bold hover:bg-brand/10 transition-colors border-b border-gray-200 dark:border-white/5">Home
+                                    1 (Omni)</a>
+                                <a href="home2.html"
+                                    class="block px-6 py-4 text-sm font-bold hover:bg-brand/10 transition-colors">Home 2
+                                    (Alt)</a>
+                            </div>
+                        </div>
+                        <a href="catalog.html"
+                            class="premium-nav-link text-brand before:opacity-100 before:scale-100 whitespace-nowrap">Catalog</a>
+                        <a href="pricing.html" class="premium-nav-link whitespace-nowrap">Pricing</a>
+                        <a href="how-it-works.html" class="premium-nav-link whitespace-nowrap">How it Works</a>
+                        <a href="dashboard.html" class="premium-nav-link whitespace-nowrap">Dashboard</a>
+                        <a href="contact.html" class="premium-nav-link whitespace-nowrap">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Desktop Actions -->
+                <div class="hidden xl:flex items-center space-x-3">
+                    <button id="rtl-toggle"
+                        class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all text-sm font-bold shadow-sm"
+                        title="Toggle RTL"><i class="fas fa-language"></i></button>
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm"
+                        title="Toggle Theme">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+
+                    <!-- CART ICON (Desktop) -->
+                    <a href="cart.html"
+                        class="relative w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm group"
+                        title="View Cart">
+                        <i class="fas fa-shopping-cart group-hover:scale-110 transition-transform"></i>
+                        <span class="absolute top-0 right-0 hidden h-3 w-3" id="cart-badge-desktop">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                            <span
+                                class="relative inline-flex rounded-full h-3 w-3 bg-brand border border-white dark:border-[#0f172a]"></span>
+                        </span>
+                    </a>
+
+                    <a href="signin.html"
+                        class="font-bold hover:text-brand transition-colors px-2 whitespace-nowrap">Sign In</a>
+                    <a href="signup.html"
+                        class="clay-btn px-6 py-2.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Get
+                        Started</a>
+                </div>
+
+                <!-- Mobile Toggle & Cart -->
+                <div class="xl:hidden flex items-center gap-3">
+                    <!-- CART ICON (Mobile) -->
+                    <a href="cart.html"
+                        class="relative w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"
+                        title="View Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="absolute top-1 right-1 hidden h-3 w-3" id="cart-badge-mobile">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                            <span
+                                class="relative inline-flex rounded-full h-3 w-3 bg-brand border border-white dark:border-[#0f172a]"></span>
+                        </span>
+                    </a>
+
+                    <!-- Menu Button -->
+                    <button id="mobile-menu-btn"
+                        class="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"><i
+                            class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto xl:hidden">
+            <div class="px-6 pt-4 pb-8 space-y-3">
+                <a href="index.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 1
+                    (Omni)</a>
+                <a href="home2.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 2
+                    (Alt)</a>
+                <a href="catalog.html" class="block px-4 py-3 rounded-xl bg-brand/10 font-bold text-brand">Catalog</a>
+                <a href="pricing.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Pricing</a>
+                <a href="how-it-works.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">How it
+                    Works</a>
+                <a href="dashboard.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Dashboard</a>
+                <a href="contact.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Contact</a>
+
+                <div class="border-t border-gray-200 dark:border-white/10 mt-6 pt-6 flex gap-4">
+                    <button id="mobile-rtl-toggle"
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i
+                            class="fas fa-exchange-alt"></i> RTL</button>
+                    <button id="mobile-theme-toggle"
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10">
+                        <i class="fas fa-moon dark:hidden"></i><i
+                            class="fas fa-sun hidden dark:inline text-yellow-400"></i> Theme
+                    </button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                    <a href="signin.html"
+                        class="w-full py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold text-center hover:bg-brand/10">Sign
+                        In</a>
+                    <a href="signup.html" class="w-full clay-btn py-3 font-bold text-center">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-32 pb-20">
+
+        <!-- Container 1: Catalog Header & Search -->
+        <section class="max-w-7xl mx-auto px-4 mb-16 relative">
+            <div
+                class="absolute -top-10 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand/10 blur-[100px] rounded-full pointer-events-none">
+            </div>
+            <div class="text-center relative z-10 mb-10">
+                <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">Equipment <span
+                        class="text-gradient">Catalog</span></h1>
+                <p class="opacity-70 text-base md:text-lg font-bold">Industry-leading gear for your next production.</p>
+            </div>
+
+            <div
+                class="glass-panel p-4 rounded-2xl md:rounded-[2rem] flex flex-col md:flex-row gap-4 items-center justify-between relative z-10 border border-white/20 shadow-xl">
+                <div class="relative w-full md:w-1/2">
+                    <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 opacity-50"></i>
+                    <input type="text" id="catalog-search" placeholder="Search for cameras, lenses, lighting..."
+                        class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/30 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 outline-none focus:border-brand/50 transition-colors font-bold text-sm">
+                </div>
+                <!-- Filter Buttons -->
+                <div class="flex gap-3 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 hide-scrollbar scroll-smooth"
+                    id="filter-buttons-container">
+                    <button data-filter="all"
+                        class="filter-btn bg-brand text-white px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap shadow-lg shadow-brand/25 transition-all">All
+                        Gear</button>
+                    <button data-filter="cameras"
+                        class="filter-btn bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-colors border border-gray-300/30 dark:border-white/5">Cameras</button>
+                    <button data-filter="lenses"
+                        class="filter-btn bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-colors border border-gray-300/30 dark:border-white/5">Lenses</button>
+                    <button data-filter="lighting"
+                        class="filter-btn bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-colors border border-gray-300/30 dark:border-white/5">Lighting</button>
+                    <button data-filter="drones"
+                        class="filter-btn bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-colors border border-gray-300/30 dark:border-white/5"><i
+                            class="fas fa-filter"></i> Drones</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container 2: Cameras -->
+        <section id="section-cameras" class="catalog-section max-w-7xl mx-auto px-4 mb-20 md:mb-24 relative z-10"
+            data-category="cameras">
+            <h2 class="text-3xl font-black mb-8 tracking-tight flex items-center gap-3"><i
+                    class="fas fa-video text-brand"></i> Cinema Cameras</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Camera 1 -->
+                <div class="omni-card p-5 group flex flex-col h-full catalog-item" data-id="101"
+                    data-name="RED V-Raptor 8K VV" data-type="Cinema Camera" data-price="400"
+                    data-img="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-48 md:h-56 rounded-[1rem] overflow-hidden mb-5 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="RED V-Raptor"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div
+                            class="absolute top-3 right-3 bg-red-500/90 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md">
+                            Popular</div>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-2 group-hover:text-brand transition-colors">RED
+                        V-Raptor 8K VV</h3>
+                    <p class="text-sm font-bold opacity-60 mb-4 flex-grow">Multi-format 8K sensor with exceptional
+                        dynamic range and compact form factor.</p>
+                    <div
+                        class="flex items-center justify-between border-t border-gray-300/20 dark:border-white/10 pt-4 mt-auto">
+                        <span class="font-black text-xl">$400 <span
+                                class="text-xs opacity-50 uppercase">/day</span></span>
+                        <button
+                            class="add-to-cart-btn clay-btn px-5 py-2 text-xs font-black uppercase tracking-widest rounded-xl inline-block text-white text-center">Book</button>
+                    </div>
+                </div>
+                <!-- Camera 2 -->
+                <div class="omni-card p-5 group flex flex-col h-full catalog-item" data-id="102"
+                    data-name="ARRI Alexa Mini LF" data-type="Cinema Camera" data-price="850"
+                    data-img="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-48 md:h-56 rounded-[1rem] overflow-hidden mb-5 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="ARRI Alexa"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-2 group-hover:text-brand transition-colors">ARRI Alexa
+                        Mini LF</h3>
+                    <p class="text-sm font-bold opacity-60 mb-4 flex-grow">Large-format cinematic aesthetic with
+                        signature ARRI color science and reliability.</p>
+                    <div
+                        class="flex items-center justify-between border-t border-gray-300/20 dark:border-white/10 pt-4 mt-auto">
+                        <span class="font-black text-xl">$850 <span
+                                class="text-xs opacity-50 uppercase">/day</span></span>
+                        <button
+                            class="add-to-cart-btn clay-btn px-5 py-2 text-xs font-black uppercase tracking-widest rounded-xl inline-block text-white text-center">Book</button>
+                    </div>
+                </div>
+                <!-- Camera 3 -->
+                <div class="omni-card p-5 group flex flex-col h-full catalog-item" data-id="103"
+                    data-name="Sony FX6 Full-Frame" data-type="Cinema Camera" data-price="250"
+                    data-img="https://images.unsplash.com/photo-1516724562728-afc824a36e84?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-48 md:h-56 rounded-[1rem] overflow-hidden mb-5 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1516724562728-afc824a36e84?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Sony FX6"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-2 group-hover:text-brand transition-colors">Sony FX6
+                        Full-Frame</h3>
+                    <p class="text-sm font-bold opacity-60 mb-4 flex-grow">Incredible low-light performance with
+                        internal ND filters in a lightweight body.</p>
+                    <div
+                        class="flex items-center justify-between border-t border-gray-300/20 dark:border-white/10 pt-4 mt-auto">
+                        <span class="font-black text-xl">$250 <span
+                                class="text-xs opacity-50 uppercase">/day</span></span>
+                        <button
+                            class="add-to-cart-btn clay-btn px-5 py-2 text-xs font-black uppercase tracking-widest rounded-xl inline-block text-white text-center">Book</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container 3: Lenses -->
+        <section id="section-lenses" class="catalog-section max-w-7xl mx-auto px-4 mb-20 md:mb-24 relative z-10"
+            data-category="lenses">
+            <h2 class="text-3xl font-black mb-8 tracking-tight flex items-center gap-3"><i
+                    class="fas fa-bullseye text-purple-500"></i> Premium Lenses</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Lens 1 -->
+                <div class="omni-card p-4 group flex flex-col h-full catalog-item" data-id="201"
+                    data-name="Atlas Orion Anamorphic" data-type="Premium Lens" data-price="600"
+                    data-img="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-40 rounded-xl overflow-hidden mb-4 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Atlas Orion"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h4 class="text-lg font-black mb-1 group-hover:text-purple-500 transition-colors">Atlas Orion
+                        Anamorphic</h4>
+                    <p class="text-xs font-bold opacity-60 mb-4 flex-grow">6-Lens A/B Set</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-sm">$600/day</span>
+                        <button
+                            class="add-to-cart-btn w-8 h-8 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <!-- Lens 2 -->
+                <div class="omni-card p-4 group flex flex-col h-full catalog-item" data-id="202"
+                    data-name="Zeiss Supreme Primes" data-type="Premium Lens" data-price="800"
+                    data-img="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-40 rounded-xl overflow-hidden mb-4 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Zeiss Supreme"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h4 class="text-lg font-black mb-1 group-hover:text-purple-500 transition-colors">Zeiss Supreme
+                        Primes</h4>
+                    <p class="text-xs font-bold opacity-60 mb-4 flex-grow">5-Lens Core Set</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-sm">$800/day</span>
+                        <button
+                            class="add-to-cart-btn w-8 h-8 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <!-- Lens 3 -->
+                <div class="omni-card p-4 group flex flex-col h-full catalog-item" data-id="203"
+                    data-name="Sony G-Master Trinity" data-type="Premium Lens" data-price="150"
+                    data-img="https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-40 rounded-xl overflow-hidden mb-4 relative bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Sony GM"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h4 class="text-lg font-black mb-1 group-hover:text-purple-500 transition-colors">Sony G-Master
+                        Trinity</h4>
+                    <p class="text-xs font-bold opacity-60 mb-4 flex-grow">16-35, 24-70, 70-200 f2.8</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-sm">$150/day</span>
+                        <button
+                            class="add-to-cart-btn w-8 h-8 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <!-- Lens 4 -->
+                <div class="omni-card p-4 group flex flex-col h-full catalog-item" data-id="204"
+                    data-name="Canon RF L-Series" data-type="Premium Lens" data-price="75"
+                    data-img="https://images.unsplash.com/photo-1617005082833-1e11a3d9954a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="h-40 rounded-xl overflow-hidden mb-4 relative bg-white/5">
+                        <img src="https://i.pinimg.com/736x/29/15/ed/2915ed8187697d2e695f10bed9a9c329.jpg"
+                            alt="Canon RF"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h4 class="text-lg font-black mb-1 group-hover:text-purple-500 transition-colors">Canon RF L-Series
+                    </h4>
+                    <p class="text-xs font-bold opacity-60 mb-4 flex-grow">28-70mm f2.0</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-sm">$75/day</span>
+                        <button
+                            class="add-to-cart-btn w-8 h-8 rounded-full bg-purple-500/20 text-purple-500 flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container 4: Lighting -->
+        <section id="section-lighting" class="catalog-section max-w-7xl mx-auto px-4 mb-20 md:mb-24 relative z-10"
+            data-category="lighting">
+            <div
+                class="glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-xl overflow-hidden relative">
+                <div
+                    class="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none">
+                </div>
+
+                <h2 class="text-3xl font-black mb-8 tracking-tight flex items-center gap-3 relative z-10"><i
+                        class="fas fa-lightbulb text-yellow-500"></i> Studio Lighting</h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+                    <!-- Light 1 -->
+                    <div class="catalog-item bg-black/5 dark:bg-white/5 rounded-2xl p-5 border border-gray-300/30 dark:border-white/5 group hover:border-yellow-500/30 transition-colors flex flex-col"
+                        data-id="301" data-name="Aputure LS 1200d Pro" data-type="Lighting" data-price="180"
+                        data-img="https://i.pinimg.com/1200x/e9/b5/64/e9b5647fbf1038cf01d8323988869cf6.jpg">
+                        <div class="h-40 md:h-48 rounded-xl overflow-hidden mb-4">
+                            <img src="https://i.pinimg.com/1200x/e9/b5/64/e9b5647fbf1038cf01d8323988869cf6.jpg"
+                                alt="Aputure"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <h4 class="font-black text-xl mb-1 group-hover:text-yellow-500 transition-colors">Aputure LS
+                            1200d Pro</h4>
+                        <p class="text-xs font-bold opacity-60 mb-4 flex-grow">Flagship daylight point-source LED.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="font-black">$180/day</span>
+                            <button
+                                class="add-to-cart-btn text-xs font-black uppercase tracking-widest text-yellow-600 dark:text-yellow-400 hover:text-yellow-500">Add
+                                Kit</button>
+                        </div>
+                    </div>
+                    <!-- Light 2 -->
+                    <div class="catalog-item bg-black/5 dark:bg-white/5 rounded-2xl p-5 border border-gray-300/30 dark:border-white/5 group hover:border-yellow-500/30 transition-colors flex flex-col"
+                        data-id="302" data-name="ARRI SkyPanel S60-C" data-type="Lighting" data-price="220"
+                        data-img="https://i.pinimg.com/736x/47/be/70/47be7088ce1432d7c1e28cb059b23ca1.jpg">
+                        <div class="h-40 md:h-48 rounded-xl overflow-hidden mb-4">
+                            <img src="https://i.pinimg.com/736x/47/be/70/47be7088ce1432d7c1e28cb059b23ca1.jpg"
+                                alt="ARRI"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <h4 class="font-black text-xl mb-1 group-hover:text-yellow-500 transition-colors">ARRI SkyPanel
+                            S60-C</h4>
+                        <p class="text-xs font-bold opacity-60 mb-4 flex-grow">Industry standard soft LED panel with
+                            full color tuneability.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="font-black">$220/day</span>
+                            <button
+                                class="add-to-cart-btn text-xs font-black uppercase tracking-widest text-yellow-600 dark:text-yellow-400 hover:text-yellow-500">Add
+                                Kit</button>
+                        </div>
+                    </div>
+                    <!-- Light 3 -->
+                    <div class="catalog-item bg-black/5 dark:bg-white/5 rounded-2xl p-5 border border-gray-300/30 dark:border-white/5 group hover:border-yellow-500/30 transition-colors flex flex-col"
+                        data-id="303" data-name="Nanlite PavoTube II 30X" data-type="Lighting" data-price="120"
+                        data-img="https://i.pinimg.com/236x/b3/97/b5/b397b545482ce863a8bdae983f65adda.jpg">
+                        <div class="h-40 md:h-48 rounded-xl overflow-hidden mb-4">
+                            <img src="https://i.pinimg.com/236x/b3/97/b5/b397b545482ce863a8bdae983f65adda.jpg"
+                                alt="Nanlite"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <h4 class="font-black text-xl mb-1 group-hover:text-yellow-500 transition-colors">Nanlite
+                            PavoTube II 30X</h4>
+                        <p class="text-xs font-bold opacity-60 mb-4 flex-grow">4-Light Kit of 4ft RGBWW LED pixel tubes.
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="font-black">$120/day</span>
+                            <button
+                                class="add-to-cart-btn text-xs font-black uppercase tracking-widest text-yellow-600 dark:text-yellow-400 hover:text-yellow-500">Add
+                                Kit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container 5: Drones -->
+        <section id="section-drones" class="catalog-section max-w-7xl mx-auto px-4 mb-20 md:mb-24 relative z-10"
+            data-category="drones">
+            <h2 class="text-3xl font-black mb-8 tracking-tight flex items-center gap-3"><i
+                    class="fas fa-plane text-pink-500"></i> Aerial & Drones</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Drone 1 -->
+                <div class="omni-card p-6 md:p-8 flex flex-col sm:flex-row gap-6 items-center group catalog-item"
+                    data-id="401" data-name="DJI Inspire 3 (X9-8K)" data-type="Drone" data-price="550"
+                    data-img="https://images.unsplash.com/photo-1508614589041-895b88991e3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                    <div class="w-full sm:w-48 h-48 sm:h-40 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                            alt="Inspire 3">
+                    </div>
+                    <div class="flex flex-col h-full justify-between w-full text-center sm:text-left">
+                        <div>
+                            <h3 class="text-2xl font-black mb-2 group-hover:text-pink-500 transition-colors">DJI Inspire
+                                3 (X9-8K)</h3>
+                            <p class="text-sm font-bold opacity-60 mb-6 sm:mb-4">Cinema-grade 8K drone with
+                                dual-operator capability and ProRes RAW.</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-black text-xl">$550<span
+                                    class="text-xs opacity-50 uppercase">/day</span></span>
+                            <button
+                                class="add-to-cart-btn clay-btn !bg-pink-600 px-5 py-2 text-xs font-black uppercase tracking-widest rounded-xl inline-block text-white text-center">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Drone 2 -->
+                <div class="omni-card p-6 md:p-8 flex flex-col sm:flex-row gap-6 items-center group catalog-item"
+                    data-id="402" data-name="DJI Mavic 3 Cine" data-type="Drone" data-price="200"
+                    data-img="https://i.pinimg.com/1200x/77/e2/c4/77e2c4f830b932ae50423b40c1d46241.jpg">
+                    <div class="w-full sm:w-48 h-48 sm:h-40 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
+                        <img src="https://i.pinimg.com/1200x/77/e2/c4/77e2c4f830b932ae50423b40c1d46241.jpg"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                            alt="Mavic 3 Cine">
+                    </div>
+                    <div class="flex flex-col h-full justify-between w-full text-center sm:text-left">
+                        <div>
+                            <h3 class="text-2xl font-black mb-2 group-hover:text-pink-500 transition-colors">DJI Mavic 3
+                                Cine</h3>
+                            <p class="text-sm font-bold opacity-60 mb-6 sm:mb-4">Hasselblad 4/3 CMOS sensor capturing
+                                Apple ProRes 422 HQ.</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-black text-xl">$200<span
+                                    class="text-xs opacity-50 uppercase">/day</span></span>
+                            <button
+                                class="add-to-cart-btn clay-btn !bg-pink-600 px-5 py-2 text-xs font-black uppercase tracking-widest rounded-xl inline-block text-white text-center">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container 6: Promo / Call to Action (Responsive) -->
+        <section class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+            <div
+                class="bg-gradient-to-tr from-brand via-purple-600 to-pink-500 p-10 md:p-20 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden group">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500">
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <i class="fas fa-boxes text-5xl text-white mb-6 animate-float"></i>
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 text-white tracking-tight">Need a Custom <br
+                            class="md:hidden" />Package?</h2>
+                    <p class="text-base md:text-lg font-bold text-white/90 mb-10 max-w-xl mx-auto">Building a massive
+                        rig for a feature film or commercial? Contact our rental agents for custom bundle pricing and
+                        long-term rental discounts.</p>
+                    <a href="how-it-works.html"
+                        class="glass-panel px-6 md:px-8 py-4 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105">
+                        Speak to an Agent
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer
+        class="mt-10 md:mt-20 relative z-10 overflow-hidden rounded-t-[2rem] md:rounded-t-[3rem] border-t border-white/10">
+        <!-- Visual Map Background Overlay -->
+        <div class="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-20 z-0 pointer-events-none grayscale mix-blend-overlay"
+            style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1920&q=80');">
+        </div>
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/95 to-[#f8fafc]/80 dark:from-[#0f172a] dark:via-[#0f172a]/95 dark:to-[#0f172a]/80 z-0">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-16 md:py-20 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+                <!-- Location & Map Card -->
+                <div class="lg:col-span-5">
+                    <a href="index.html" class="flex items-center gap-3 text-3xl font-black group mb-8">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                <path fill-rule="evenodd"
+                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-gradient">OmniLens</span>
+                    </a>
+
+                    <div
+                        class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group">
+                        <div
+                            class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand/20 blur-[50px] rounded-full pointer-events-none group-hover:bg-brand/40 transition-colors duration-500">
+                        </div>
+                        <h4 class="font-black text-xl mb-4 flex items-center gap-3"><i
+                                class="fas fa-map-marker-alt text-brand"></i> Headquarters</h4>
+                        <p class="font-bold opacity-80 leading-relaxed text-sm md:text-base mb-6">
+                            OmniLens Studios, 99 Creative Way<br>
+                            Production District<br>
+                            Los Angeles, CA 90028
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 font-bold text-sm">
+                            <a href="tel:8005550199"
+                                class="flex items-center gap-2 hover:text-brand transition-colors"><i
+                                    class="fas fa-phone opacity-50"></i> (800) 555-0199</a>
+                            <a href="mailto:rentals@omnilens.com"
+                                class="flex items-center gap-2 hover:text-brand transition-colors"><i
+                                    class="fas fa-envelope opacity-50"></i> rentals@omnilens.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links 1 -->
+                <div class="lg:col-span-2 lg:col-start-7 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-brand">Platform</h4>
+                    <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
+                        <li><a href="catalog.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Equipment
+                                Catalog</a></li>
+                        <li><a href="pricing.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Pricing &
+                                Deposits</a></li>
+                        <li><a href="how-it-works.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">How It
+                                Works</a></li>
+                        <li><a href="dashboard.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">User
+                                Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links 2 -->
+                <div class="lg:col-span-2 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-purple-500">Company</h4>
+                    <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Help
+                                Center / FAQ</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Insurance
+                                Policies</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Terms of
+                                Service</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Contact
+                                Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="lg:col-span-2 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-pink-500">Socials</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://x.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all">
+                            <i class="fa-brands fa-x-twitter relative z-10"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 transition-all">
+                            <i class="fa-brands fa-instagram relative z-10"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-red-600 transition-all">
+                            <i class="fa-brands fa-youtube relative z-10"></i>
+                        </a>
+                        <a href="https://discord.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-indigo-600 transition-all">
+                            <i class="fa-brands fa-discord relative z-10"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Bar -->
+            <div
+                class="border-t border-gray-300/20 dark:border-gray-700/50 mt-12 md:mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                <p class="font-bold opacity-60 text-xs tracking-wider uppercase">&copy; 2026 OmniLens Rentals. All
+                    rights reserved.</p>
+                <div class="flex gap-6 opacity-40 text-2xl">
+                    <i
+                        class="fa-brands fa-cc-visa hover:opacity-100 hover:text-blue-500 transition-colors cursor-pointer"></i>
+                    <i
+                        class="fa-brands fa-cc-mastercard hover:opacity-100 hover:text-orange-500 transition-colors cursor-pointer"></i>
+                    <i
+                        class="fa-brands fa-cc-amex hover:opacity-100 hover:text-blue-400 transition-colors cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Integrated JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const body = document.body;
+
+            // Theme Toggles
+            const themeBtns = [document.getElementById('theme-toggle'), document.getElementById('mobile-theme-toggle')];
+            themeBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        html.classList.toggle('dark');
+                        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+                    });
+                }
+            });
+
+            // RTL Toggles
+            const rtlBtns = [document.getElementById('rtl-toggle'), document.getElementById('mobile-rtl-toggle')];
+            rtlBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        const isRtl = html.getAttribute('dir') === 'rtl';
+                        const newDir = isRtl ? 'ltr' : 'rtl';
+                        html.setAttribute('dir', newDir);
+                        body.setAttribute('dir', newDir);
+                    });
+                }
+            });
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // ---- Filter Buttons & Search Functionality ----
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const catalogSections = document.querySelectorAll('.catalog-section');
+            const searchInput = document.getElementById('catalog-search');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active styles on buttons
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-brand', 'text-white', 'shadow-lg', 'shadow-brand/25');
+                        btn.classList.add('bg-black/5', 'dark:bg-white/5');
+                    });
+                    button.classList.remove('bg-black/5', 'dark:bg-white/5');
+                    button.classList.add('bg-brand', 'text-white', 'shadow-lg', 'shadow-brand/25');
+
+                    const filter = button.getAttribute('data-filter');
+
+                    catalogSections.forEach(section => {
+                        const category = section.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search filter functionality
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase().trim();
+                    const allItems = document.querySelectorAll('.catalog-item');
+
+                    allItems.forEach(item => {
+                        const name = item.getAttribute('data-name').toLowerCase();
+                        const type = item.getAttribute('data-type').toLowerCase();
+                        if (name.includes(term) || type.includes(term)) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // ---- Catalog to Cart Logic ----
+            const updateCartBadges = () => {
+                const cart = JSON.parse(localStorage.getItem('omni_cart')) || [];
+                const badgeMobile = document.getElementById('cart-badge-mobile');
+                const badgeDesktop = document.getElementById('cart-badge-desktop');
+
+                if (cart.length > 0) {
+                    if (badgeMobile) badgeMobile.style.display = 'flex';
+                    if (badgeDesktop) badgeDesktop.style.display = 'flex';
+                } else {
+                    if (badgeMobile) badgeMobile.style.display = 'none';
+                    if (badgeDesktop) badgeDesktop.style.display = 'none';
+                }
+            };
+
+            updateCartBadges();
+
+            const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+
+            addToCartBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    const itemContainer = e.target.closest('.catalog-item');
+                    if (!itemContainer) return;
+
+                    const id = itemContainer.getAttribute('data-id');
+                    const name = itemContainer.getAttribute('data-name');
+                    const type = itemContainer.getAttribute('data-type');
+                    const pricePerDay = parseFloat(itemContainer.getAttribute('data-price'));
+                    const img = itemContainer.getAttribute('data-img');
+
+                    const deposit = pricePerDay * 3;
+
+                    const newItem = {
+                        id: parseInt(id),
+                        name: name,
+                        type: type,
+                        pricePerDay: pricePerDay,
+                        deposit: deposit,
+                        days: 1,
+                        img: img
+                    };
+
+                    let cart = JSON.parse(localStorage.getItem('omni_cart')) || [];
+                    const existingItemIndex = cart.findIndex(item => item.id === newItem.id);
+
+                    if (existingItemIndex > -1) {
+                        cart[existingItemIndex].days += 1;
+                    } else {
+                        cart.push(newItem);
+                    }
+
+                    localStorage.setItem('omni_cart', JSON.stringify(cart));
+                    updateCartBadges();
+
+                    const originalText = e.target.innerHTML;
+                    e.target.innerHTML = '<i class="fas fa-check"></i> Added';
+                    e.target.classList.add('bg-green-500');
+
+                    setTimeout(() => {
+                        window.location.href = 'cart.html';
+                    }, 400);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

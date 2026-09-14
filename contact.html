@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniLens | Contact Us</title>
+    <!-- Custom Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 15a3 3 0 100-6 3 3 0 000 6z'/><path fill-rule='evenodd' d='M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z' clip-rule='evenodd'/></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { brand: '#3b82f6', brandDark: '#2563eb', darkBase: '#0f172a', darkCard: '#1e293b' },
+                    animation: { 'spin-slow': 'spin 12s linear infinite' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Omnimorphic CSS Architecture -->
+    <style>
+        html {
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        html.dark {
+            background-color: #0f172a;
+        }
+
+        /* Prevent position:fixed breaking by keeping transform off the body */
+        main,
+        footer {
+            animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        nav {
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+
+        @keyframes smoothLoad {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        html:not(.dark) .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        /* Omni-Card */
+        .omni-card {
+            position: relative;
+            background-color: #1e293b;
+            border-radius: 1.5rem;
+            z-index: 1;
+            box-shadow: 10px 10px 20px #131a25, -10px -10px 20px #293851;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html:not(.dark) .omni-card {
+            background-color: #f1f5f9;
+            box-shadow: 10px 10px 20px #cbd5e1, -10px -10px 20px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .omni-card::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 1.6rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            z-index: -1;
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 0.5s ease;
+        }
+
+        .omni-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .omni-card:hover::before {
+            opacity: 0.6;
+        }
+
+        /* Claymorphism Buttons */
+        .clay-btn {
+            background: #3b82f6;
+            border-radius: 1rem;
+            color: white;
+            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.3), inset -4px -4px 8px rgba(0, 0, 0, 0.2), 6px 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .clay-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.3), 8px 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Nav Link Hover */
+        .premium-nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            z-index: 1;
+            transition: color 0.3s, text-shadow 0.3s;
+            font-weight: 700;
+        }
+
+        .premium-nav-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 9999px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .premium-nav-link:hover::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .premium-nav-link:hover {
+            color: #3b82f6;
+            text-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Typography & Utilities */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+    </style>
+
+    <!-- Theme Script -->
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    </script>
+</head>
+
+<body class="antialiased transition-colors duration-300 text-gray-900 dark:text-gray-100 overflow-x-hidden" dir="ltr">
+
+    <!-- Fully Fixed Responsive Navigation -->
+    <nav
+        class="fixed top-0 left-0 w-full z-[9999] bg-white/80 dark:bg-[#0f172a]/90 backdrop-blur-2xl transition-all duration-300 border-b border-gray-200 dark:border-white/10 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center gap-3 text-2xl font-black group">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                <path fill-rule="evenodd"
+                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-gradient tracking-tight">OmniLens</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Links -->
+                <div class="hidden xl:block">
+                    <div class="ml-6 flex items-center space-x-1">
+                        <div class="relative group py-4">
+                            <button class="premium-nav-link inline-flex items-center gap-2 whitespace-nowrap">
+                                Home <i
+                                    class="fas fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform duration-300"></i>
+                            </button>
+                            <div
+                                class="absolute top-full left-0 w-48 rounded-2xl glass-panel bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-2 overflow-hidden border border-gray-200 dark:border-white/20 shadow-2xl">
+                                <a href="index.html"
+                                    class="block px-6 py-4 text-sm font-bold hover:bg-brand/10 transition-colors border-b border-gray-200 dark:border-white/5">Home
+                                    1 (Omni)</a>
+                                <a href="home2.html"
+                                    class="block px-6 py-4 text-sm font-bold hover:bg-brand/10 transition-colors">Home 2
+                                    (Alt)</a>
+                            </div>
+                        </div>
+                        <a href="catalog.html" class="premium-nav-link whitespace-nowrap">Catalog</a>
+                        <a href="pricing.html" class="premium-nav-link whitespace-nowrap">Pricing</a>
+                        <a href="how-it-works.html" class="premium-nav-link whitespace-nowrap">How it Works</a>
+                        <a href="dashboard.html" class="premium-nav-link whitespace-nowrap">Dashboard</a>
+                        <a href="contact.html"
+                            class="premium-nav-link text-brand before:opacity-100 before:scale-100 whitespace-nowrap">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Desktop Actions -->
+                <div class="hidden xl:flex items-center space-x-3">
+                    <button id="rtl-toggle"
+                        class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all text-sm font-bold shadow-sm"
+                        title="Toggle RTL"><i class="fas fa-language"></i></button>
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm"
+                        title="Toggle Theme">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+
+                    <!-- CART ICON (Desktop) -->
+                    <a href="cart.html"
+                        class="relative w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm group"
+                        title="View Cart">
+                        <i class="fas fa-shopping-cart group-hover:scale-110 transition-transform"></i>
+                        <span class="absolute top-0 right-0 flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                            <span
+                                class="relative inline-flex rounded-full h-3 w-3 bg-brand border border-white dark:border-[#0f172a]"></span>
+                        </span>
+                    </a>
+
+                    <a href="signin.html"
+                        class="font-bold hover:text-brand transition-colors px-2 whitespace-nowrap">Sign In</a>
+                    <a href="signup.html"
+                        class="clay-btn px-6 py-2.5 font-bold uppercase tracking-wider text-xs whitespace-nowrap">Get
+                        Started</a>
+                </div>
+
+                <!-- Mobile Toggle & Cart -->
+                <div class="xl:hidden flex items-center gap-3">
+                    <!-- CART ICON (Mobile) -->
+                    <a href="cart.html"
+                        class="relative w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"
+                        title="View Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="absolute top-1 right-1 flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                            <span
+                                class="relative inline-flex rounded-full h-3 w-3 bg-brand border border-white dark:border-[#0f172a]"></span>
+                        </span>
+                    </a>
+
+                    <!-- Menu Button -->
+                    <button id="mobile-menu-btn"
+                        class="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"><i
+                            class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto xl:hidden">
+            <div class="px-6 pt-4 pb-8 space-y-3">
+                <a href="index.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 1
+                    (Omni)</a>
+                <a href="home2.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 2
+                    (Alt)</a>
+                <a href="catalog.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Catalog</a>
+                <a href="pricing.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Pricing</a>
+                <a href="how-it-works.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">How it
+                    Works</a>
+                <a href="dashboard.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Dashboard</a>
+                <a href="contact.html" class="block px-4 py-3 rounded-xl bg-brand/10 font-bold text-brand">Contact</a>
+
+                <div class="border-t border-gray-200 dark:border-white/10 mt-6 pt-6 flex gap-4">
+                    <button id="mobile-rtl-toggle"
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i
+                            class="fas fa-exchange-alt"></i> RTL</button>
+                    <button id="mobile-theme-toggle"
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10">
+                        <i class="fas fa-moon dark:hidden"></i><i
+                            class="fas fa-sun hidden dark:inline text-yellow-400"></i> Theme
+                    </button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                    <a href="signin.html"
+                        class="w-full py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold text-center hover:bg-brand/10">Sign
+                        In</a>
+                    <a href="signup.html" class="w-full clay-btn py-3 font-bold text-center">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-32 pb-20">
+
+        <!-- Header Section -->
+        <section class="max-w-7xl mx-auto px-4 mb-16 relative">
+            <div
+                class="absolute -top-10 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand/10 blur-[100px] rounded-full pointer-events-none">
+            </div>
+            <div class="text-center relative z-10 mb-10">
+                <div
+                    class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-brand/10 border border-brand/30 text-brand font-bold text-xs uppercase tracking-widest shadow-sm">
+                    <i class="fas fa-headset"></i> 24/7 Support
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">Get in <span
+                        class="text-gradient">Touch</span></h1>
+                <p class="opacity-70 text-base md:text-lg font-bold max-w-2xl mx-auto">Whether you need a custom quote
+                    for a feature film, or technical support on set, our team is always ready to assist.</p>
+            </div>
+        </section>
+
+        <!-- Main Contact Grid -->
+        <section class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+                <!-- Left Column: Contact Information -->
+                <div class="lg:col-span-5 flex flex-col gap-6">
+
+                    <!-- Direct Contact Card -->
+                    <div class="omni-card p-8 md:p-10 border border-white/5">
+                        <h3 class="text-2xl font-black mb-6 text-brand">Direct Contact</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fas fa-phone-alt"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-sm opacity-60 uppercase tracking-widest mb-1">Phone (24/7
+                                        Support)</h4>
+                                    <a href="tel:8005550199"
+                                        class="font-black text-xl hover:text-brand transition-colors">(800) 555-0199</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-sm opacity-60 uppercase tracking-widest mb-1">Email
+                                        inquiries</h4>
+                                    <a href="mailto:rentals@omnilens.com"
+                                        class="font-black text-lg hover:text-purple-500 transition-colors">rentals@omnilens.com</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fas fa-comment-dots"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-sm opacity-60 uppercase tracking-widest mb-1">Live Chat
+                                    </h4>
+                                    <p class="font-black text-lg text-green-500 flex items-center gap-2"><span
+                                            class="w-2 h-2 rounded-full bg-green-500 animate-ping absolute"></span><span
+                                            class="w-2 h-2 rounded-full bg-green-500 relative"></span> Agents Online Now
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hub Locations Card -->
+                    <div class="glass-panel p-8 md:p-10 rounded-[2rem] border border-white/10 shadow-lg">
+                        <h3 class="text-2xl font-black mb-6">Our Hubs</h3>
+
+                        <div class="space-y-6">
+                            <div class="border-b border-gray-200 dark:border-white/10 pb-4">
+                                <h4 class="font-black text-lg mb-1 flex items-center gap-2"><i
+                                        class="fas fa-map-marker-alt text-brand"></i> Los Angeles (HQ)</h4>
+                                <p class="text-sm font-bold opacity-70 leading-relaxed">OmniLens Studios, 99 Creative
+                                    Way<br>Hollywood, CA 90028</p>
+                            </div>
+                            <div class="border-b border-gray-200 dark:border-white/10 pb-4">
+                                <h4 class="font-black text-lg mb-1 flex items-center gap-2"><i
+                                        class="fas fa-map-marker-alt text-purple-500"></i> New York City</h4>
+                                <p class="text-sm font-bold opacity-70 leading-relaxed">142 Studio Ave<br>Brooklyn, NY
+                                    11211</p>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-lg mb-1 flex items-center gap-2"><i
+                                        class="fas fa-map-marker-alt text-pink-500"></i> Atlanta</h4>
+                                <p class="text-sm font-bold opacity-70 leading-relaxed">500 Peach St<br>Atlanta, GA
+                                    30308</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Contact Form -->
+                <div class="lg:col-span-7">
+                    <div
+                        class="glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-white/20 shadow-xl relative overflow-hidden h-full">
+                        <!-- Decorative background element -->
+                        <div
+                            class="absolute -right-20 -top-20 w-64 h-64 bg-brand/10 blur-[80px] rounded-full pointer-events-none">
+                        </div>
+
+                        <h2 class="text-3xl font-black mb-8 tracking-tight relative z-10">Send us a message</h2>
+
+                        <form class="relative z-10 flex flex-col gap-6"
+                            onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Full
+                                        Name</label>
+                                    <input type="text" placeholder="John Doe" required
+                                        class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-4 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Email
+                                        Address</label>
+                                    <input type="email" placeholder="john@production.com" required
+                                        class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-4 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Phone
+                                        Number</label>
+                                    <input type="tel" placeholder="(555) 123-4567"
+                                        class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-4 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Inquiry
+                                        Type</label>
+                                    <select
+                                        class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-4 outline-none focus:border-brand transition-colors font-bold text-sm appearance-none cursor-pointer">
+                                        <option value="general" class="dark:text-black">General Inquiry</option>
+                                        <option value="quote" class="dark:text-black">Custom Rental Quote</option>
+                                        <option value="support" class="dark:text-black">Technical Support</option>
+                                        <option value="billing" class="dark:text-black">Billing Issue</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <label
+                                    class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Message</label>
+                                <textarea rows="5" placeholder="How can we help you today?" required
+                                    class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-4 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50 resize-none"></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="clay-btn w-full py-5 font-black text-sm uppercase tracking-widest mt-2">Send
+                                Message <i class="fas fa-paper-plane ml-2"></i></button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-20 relative z-10 overflow-hidden rounded-t-[2rem] md:rounded-t-[3rem] border-t border-white/10">
+        <!-- Visual Map Background Overlay -->
+        <div class="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-20 z-0 pointer-events-none grayscale mix-blend-overlay"
+            style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        </div>
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/95 to-[#f8fafc]/80 dark:from-[#0f172a] dark:via-[#0f172a]/95 dark:to-[#0f172a]/80 z-0">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-16 md:py-20 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+                <!-- Location & Map Card -->
+                <div class="lg:col-span-5">
+                    <a href="index.html" class="flex items-center gap-3 text-3xl font-black group mb-8">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                <path fill-rule="evenodd"
+                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <span class="text-gradient">OmniLens</span>
+                    </a>
+
+                    <div
+                        class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group">
+                        <div
+                            class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand/20 blur-[50px] rounded-full pointer-events-none group-hover:bg-brand/40 transition-colors duration-500">
+                        </div>
+                        <h4 class="font-black text-xl mb-4 flex items-center gap-3"><i
+                                class="fas fa-map-marker-alt text-brand"></i> Headquarters</h4>
+                        <p class="font-bold opacity-80 leading-relaxed text-sm md:text-base mb-6">
+                            OmniLens Studios, 99 Creative Way<br>
+                            Production District<br>
+                            Los Angeles, CA 90028
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 font-bold text-sm">
+                            <a href="tel:8005550199"
+                                class="flex items-center gap-2 hover:text-brand transition-colors"><i
+                                    class="fas fa-phone opacity-50"></i> (800) 555-0199</a>
+                            <a href="mailto:rentals@omnilens.com"
+                                class="flex items-center gap-2 hover:text-brand transition-colors"><i
+                                    class="fas fa-envelope opacity-50"></i> rentals@omnilens.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links 1 -->
+                <div class="lg:col-span-2 lg:col-start-7 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-brand">Platform</h4>
+                    <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
+                        <li><a href="catalog.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Equipment
+                                Catalog</a></li>
+                        <li><a href="pricing.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Pricing &
+                                Deposits</a></li>
+                        <li><a href="how-it-works.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">How It
+                                Works</a></li>
+                        <li><a href="dashboard.html"
+                                class="hover:text-brand transition-all inline-block hover:translate-x-2">User
+                                Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links 2 -->
+                <div class="lg:col-span-2 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-purple-500">Company</h4>
+                    <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Help
+                                Center / FAQ</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Insurance
+                                Policies</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Terms of
+                                Service</a></li>
+                        <li><a href="#"
+                                class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Contact
+                                Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="lg:col-span-2 pt-4">
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-pink-500">Socials</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://x.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all">
+                            <i class="fa-brands fa-x-twitter relative z-10"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 transition-all">
+                            <i class="fa-brands fa-instagram relative z-10"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-red-600 transition-all">
+                            <i class="fa-brands fa-youtube relative z-10"></i>
+                        </a>
+                        <a href="https://discord.com" target="_blank" rel="noopener noreferrer"
+                            class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-indigo-600 transition-all">
+                            <i class="fa-brands fa-discord relative z-10"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Bar -->
+            <div
+                class="border-t border-gray-300/20 dark:border-gray-700/50 mt-12 md:mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                <p class="font-bold opacity-60 text-xs tracking-wider uppercase">&copy; 2026 OmniLens Rentals. All
+                    rights reserved.</p>
+                <div class="flex gap-6 opacity-40 text-2xl">
+                    <i
+                        class="fa-brands fa-cc-visa hover:opacity-100 hover:text-blue-500 transition-colors cursor-pointer"></i>
+                    <i
+                        class="fa-brands fa-cc-mastercard hover:opacity-100 hover:text-orange-500 transition-colors cursor-pointer"></i>
+                    <i
+                        class="fa-brands fa-cc-amex hover:opacity-100 hover:text-blue-400 transition-colors cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Integrated JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const body = document.body;
+
+            // Theme Toggles
+            const themeBtns = [document.getElementById('theme-toggle'), document.getElementById('mobile-theme-toggle')];
+            themeBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        html.classList.toggle('dark');
+                        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+                    });
+                }
+            });
+
+            // RTL Toggles
+            const rtlBtns = [document.getElementById('rtl-toggle'), document.getElementById('mobile-rtl-toggle')];
+            rtlBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        const isRtl = html.getAttribute('dir') === 'rtl';
+                        const newDir = isRtl ? 'ltr' : 'rtl';
+                        html.setAttribute('dir', newDir);
+                        body.setAttribute('dir', newDir);
+                    });
+                }
+            });
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
