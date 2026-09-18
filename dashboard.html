@@ -573,19 +573,19 @@
                             <h2 class="text-2xl font-black"><i class="fas fa-calendar-alt text-brand mr-2"></i> Schedule
                             </h2>
                             <div class="flex gap-2">
-                                <button
+                                <button id="cal-prev"
                                     class="w-8 h-8 rounded-full glass-panel flex items-center justify-center hover:text-brand transition-colors"><i
                                         class="fas fa-chevron-left"></i></button>
-                                <button
+                                <button id="cal-next"
                                     class="w-8 h-8 rounded-full glass-panel flex items-center justify-center hover:text-brand transition-colors"><i
                                         class="fas fa-chevron-right"></i></button>
                             </div>
                         </div>
 
-                        <div class="text-center mb-4 font-black text-xl">October 2026</div>
+                        <div id="cal-month-year" class="text-center mb-4 font-black text-xl"></div>
 
-                        <!-- Simple Fake Calendar Grid -->
-                        <div class="grid grid-cols-7 gap-2 md:gap-4 text-center">
+                        <!-- Static Days Header -->
+                        <div class="grid grid-cols-7 gap-2 md:gap-4 text-center mb-2">
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Sun</div>
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Mon</div>
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Tue</div>
@@ -593,84 +593,11 @@
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Thu</div>
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Fri</div>
                             <div class="text-xs font-bold opacity-50 uppercase pb-2">Sat</div>
+                        </div>
 
-                            <!-- Empty days -->
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-
-                            <!-- Days -->
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                1</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                2</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                3</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                4</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                5</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                6</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                7</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                8</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                9</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                10</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                11</div>
-
-                            <!-- Highlighted Booking -->
-                            <div
-                                class="aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border border-brand/50 text-brand font-black relative">
-                                12
-                                <div class="w-1 h-1 bg-brand rounded-full absolute bottom-2"></div>
-                            </div>
-                            <div
-                                class="aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border-y border-brand/50 text-brand font-black">
-                                13
-                            </div>
-                            <div
-                                class="aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border-y border-brand/50 text-brand font-black">
-                                14
-                            </div>
-                            <div
-                                class="aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border border-brand/50 text-brand font-black relative">
-                                15
-                                <div class="w-1 h-1 bg-red-500 rounded-full absolute bottom-2"></div>
-                            </div>
-
-                            <!-- Rest of month -->
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                16</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                17</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                18</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                19</div>
-                            <div
-                                class="aspect-square flex items-center justify-center rounded-xl glass-panel opacity-50">
-                                20</div>
+                        <!-- Dynamic Days Grid -->
+                        <div id="cal-grid" class="grid grid-cols-7 gap-2 md:gap-4 text-center">
+                            <!-- JavaScript will populate the days here -->
                         </div>
                     </div>
                 </div>
@@ -1052,7 +979,79 @@
             });
 
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const monthYearText = document.getElementById('cal-month-year');
+            const calGrid = document.getElementById('cal-grid');
+            const prevBtn = document.getElementById('cal-prev');
+            const nextBtn = document.getElementById('cal-next');
+
+            // Only run if the calendar exists on the page
+            if (!monthYearText || !calGrid || !prevBtn || !nextBtn) return;
+
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            function renderCalendar(month, year) {
+                calGrid.innerHTML = '';
+                monthYearText.textContent = `${monthNames[month]} ${year}`;
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                const today = new Date();
+                const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+
+                // Add empty slots for the days before the 1st of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDiv = document.createElement('div');
+                    calGrid.appendChild(emptyDiv);
+                }
+
+                // Render actual days
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayDiv = document.createElement('div');
+
+                    if (isCurrentMonth && i === today.getDate()) {
+                        // Highlight today's date
+                        dayDiv.className = 'aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border border-brand/50 text-brand font-black relative shadow-lg cursor-pointer hover:bg-brand/30 transition-colors';
+                        dayDiv.innerHTML = `${i} <div class="w-1 h-1 bg-brand rounded-full absolute bottom-2"></div>`;
+                    } else {
+                        // Standard unbooked days
+                        dayDiv.className = 'aspect-square flex flex-col items-center justify-center rounded-xl glass-panel opacity-50 hover:opacity-100 hover:bg-white/5 cursor-pointer transition-all font-bold';
+                        dayDiv.textContent = i;
+                    }
+
+                    calGrid.appendChild(dayDiv);
+                }
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            // Initialize calendar on page load
+            renderCalendar(currentMonth, currentYear);
+        });
     </script>
+
 </body>
 
 </html>
