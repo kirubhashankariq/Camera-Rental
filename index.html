@@ -24,203 +24,103 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Omnimorphic CSS Architecture -->
-    <style>
-        /* Anti-Flash & Base */
-        html {
-            background-color: #f8fafc;
-            scroll-behavior: smooth;
+                <style>
+        /* Professional Architecture */
+        html { background-color: #f8fafc; scroll-behavior: smooth; }
+        html.dark { background-color: #0f172a; }
+
+        /* Clean up animations */
+        main, footer { animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        nav { animation: fadeIn 0.8s ease-in forwards; }
+        @keyframes smoothLoad { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Solid Panels (Replaces Glassmorphism, preserves contrast) */
+        .glass-panel { 
+            backdrop-filter: none !important; 
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+            background-color: rgba(255,255,255,0.9);
+            border-color: #e2e8f0;
+        }
+        html.dark .glass-panel {
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+            background-color: rgba(30,41,59,0.9);
+            border-color: #334155;
         }
 
-        html.dark {
-            background-color: #0f172a;
+        /* Flat Cards (Replaces Neumorphism) */
+        .omni-card { 
+            position: relative; 
+            border-radius: 0.5rem; 
+            z-index: 1; 
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); 
+            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s; 
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
         }
-
-        /* FIX: Moved smoothLoad animation off the body to prevent breaking position: fixed */
-        main,
-        footer {
-            animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .omni-card::before { display: none !important; }
+        .omni-card:hover { 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
+            transform: translateY(-2px); 
+            border-color: rgba(0,0,0,0.15);
         }
-
-        nav {
-            animation: fadeIn 0.8s ease-in forwards;
-        }
-
-        @keyframes smoothLoad {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* 1. Premium Glassmorphism */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        html:not(.dark) .glass-panel {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-        }
-
-        /* 2. Deep Neumorphism & Glowing Hover (Omni-Card) */
-        .omni-card {
-            position: relative;
+        html.dark .omni-card {
             background-color: #1e293b;
-            border-radius: 1.5rem;
-            z-index: 1;
-            box-shadow: 10px 10px 20px #131a25, -10px -10px 20px #293851;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-color: #334155;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        }
+        html.dark .omni-card:hover { 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4); 
+            border-color: rgba(255,255,255,0.2);
         }
 
-        html:not(.dark) .omni-card {
-            background-color: #f1f5f9;
-            box-shadow: 10px 10px 20px #cbd5e1, -10px -10px 20px #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+        /* Flat Buttons (Replaces Claymorphism) */
+        .clay-btn { 
+            border-radius: 0.375rem !important; 
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); 
+            transition: background-color 0.2s, box-shadow 0.2s; 
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+        }
+        .clay-btn:hover { 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); 
+            transform: none !important; 
+            background-color: #2563eb;
         }
 
-        .omni-card::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 1.6rem;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-            z-index: -1;
-            opacity: 0;
-            filter: blur(12px);
-            transition: opacity 0.5s ease;
+        /* Clean Links */
+        .premium-nav-link { 
+            position: relative; 
+            padding: 0.5rem 1rem; 
+            z-index: 1; 
+            transition: color 0.2s; 
+            font-weight: 600; 
+            text-shadow: none !important; 
+        }
+        .premium-nav-link::before { display: none !important; }
+        .premium-nav-link:hover { color: #3b82f6 !important; text-shadow: none !important; }
+
+        /* Solid Typography */
+        .text-gradient { 
+            color: #3b82f6 !important; 
+            background: none !important; 
+            -webkit-text-fill-color: #3b82f6 !important; 
+            text-shadow: none !important; 
         }
 
-        .omni-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .omni-card:hover::before {
-            opacity: 0.6;
-        }
-
-        /* 3. Tactile Claymorphism Buttons */
-        .clay-btn {
-            background: #3b82f6;
-            border-radius: 1rem;
-            color: white;
-            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.3), inset -4px -4px 8px rgba(0, 0, 0, 0.2), 6px 6px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .clay-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.3), 8px 8px 20px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Nav Link Premium Hover Effects */
-        .premium-nav-link {
-            position: relative;
-            padding: 0.5rem 1rem;
-            z-index: 1;
-            transition: color 0.3s, text-shadow 0.3s;
-            font-weight: 700;
-        }
-
-        .premium-nav-link::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(59, 130, 246, 0.15);
-            border-radius: 9999px;
-            transform: scale(0.8);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: -1;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .premium-nav-link:hover::before {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .premium-nav-link:hover {
-            color: #3b82f6;
-            text-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-        }
-
-        /* Typography & Utilities */
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-        }
-
-        .animate-float {
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .animate-float-delayed {
-            animation: float 8s ease-in-out 4s infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-        }
+        /* Disable Floating for Professional Look */
+        .animate-float, .animate-float-delayed { animation: none !important; transform: none !important; }
+        
+        /* Remove crazy colored glows */
+        [class*="shadow-[0_0_"] { box-shadow: none !important; }
 
         /* Infinite Marquee */
-        .marquee-wrapper {
-            display: flex;
-            overflow: hidden;
-            white-space: nowrap;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-
-        .marquee-content {
-            display: flex;
-            animation: marquee 25s linear infinite;
-        }
-
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+        .marquee-wrapper { display: flex; overflow: hidden; white-space: nowrap; mask-image: none !important; -webkit-mask-image: none !important; }
+        .marquee-content { display: flex; animation: marquee 25s linear infinite; }
+        .marquee-content:hover { animation-play-state: paused; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 
     <!-- Anti-Flash Default to Dark Mode Script -->
@@ -407,9 +307,7 @@
                 <div class="w-full md:w-2/5 flex justify-center md:justify-end">
                     <div
                         class="glass-panel p-8 rounded-[2rem] animate-float-delayed flex flex-col gap-6 backdrop-blur-3xl border border-white/20 shadow-2xl relative overflow-hidden">
-                        <div
-                            class="absolute -top-10 -right-10 w-32 h-32 bg-purple-500 rounded-full blur-[50px] opacity-40">
-                        </div>
+                        
                         <div class="relative z-10 flex items-center gap-5 border-b border-white/10 pb-6">
                             <div class="w-16 h-16 rounded-full clay-btn flex items-center justify-center text-2xl"><i
                                     class="fas fa-star text-yellow-300"></i></div>
@@ -505,9 +403,7 @@
 
         <!-- Container 4: Categories (Images Fixed) -->
         <section class="py-24 max-w-7xl mx-auto px-4 relative">
-            <div
-                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-brand/5 blur-[120px] rounded-full pointer-events-none">
-            </div>
+            
 
             <div class="text-center mb-16 relative z-10">
                 <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">Browse by <span
@@ -522,7 +418,7 @@
                             alt="Cameras"
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                         <div
-                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-white/20 text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
                             <i class="fas fa-video text-brand"></i> 142 Items
                         </div>
                     </div>
@@ -541,7 +437,7 @@
                             alt="Lenses"
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                         <div
-                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-white/20 text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
                             <i class="fas fa-bullseye text-purple-500"></i> 89 Sets
                         </div>
                     </div>
@@ -561,7 +457,7 @@
                             alt="Lighting"
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                         <div
-                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-white/20 text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                            class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-xl border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-xs font-black uppercase tracking-widest flex items-center gap-2">
                             <i class="fas fa-lightbulb text-yellow-500"></i> 215 Units
                         </div>
                     </div>
@@ -580,9 +476,7 @@
 
         <!-- Container 5: Trending Kits (Responsive Fix Applied) -->
         <section class="py-24 relative overflow-hidden">
-            <div
-                class="absolute -left-[20%] top-1/4 w-[50%] h-[50%] bg-gradient-to-r from-blue-600/10 to-transparent rounded-full blur-[100px] pointer-events-none">
-            </div>
+            
 
             <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <h2 class="text-4xl md:text-6xl font-black mb-16 text-center tracking-tight">Trending <span
@@ -660,12 +554,8 @@
             <div
                 class="glass-panel p-10 md:p-20 rounded-[3rem] text-center relative overflow-hidden border border-white/20 shadow-2xl">
                 <!-- Internal Rotating Mesh Glow -->
-                <div
-                    class="absolute -top-32 -right-32 w-96 h-96 bg-brand rounded-full blur-[120px] opacity-30 animate-spin-slow pointer-events-none">
-                </div>
-                <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-600 rounded-full blur-[120px] opacity-20 pointer-events-none">
-                </div>
+                
+                
 
                 <h2 class="text-4xl md:text-6xl font-black mb-16 relative z-10 tracking-tight">The OmniLens <span
                         class="text-gradient">Advantage</span></h2>
@@ -793,9 +683,7 @@
                     <!-- Glassmorphic Map/Address Card -->
                     <div
                         class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group">
-                        <div
-                            class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand/20 blur-[50px] rounded-full pointer-events-none group-hover:bg-brand/40 transition-colors duration-500">
-                        </div>
+                        
                         <h4 class="font-black text-xl mb-4 flex items-center gap-3"><i
                                 class="fas fa-map-marker-alt text-brand"></i> Headquarters</h4>
                         <p class="font-bold opacity-80 leading-relaxed text-sm md:text-base mb-6">
@@ -939,3 +827,5 @@
 </body>
 
 </html>
+
+

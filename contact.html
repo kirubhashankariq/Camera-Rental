@@ -24,158 +24,103 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Omnimorphic CSS Architecture -->
-    <style>
-        html {
-            background-color: #f8fafc;
-            scroll-behavior: smooth;
+                <style>
+        /* Professional Architecture */
+        html { background-color: #f8fafc; scroll-behavior: smooth; }
+        html.dark { background-color: #0f172a; }
+
+        /* Clean up animations */
+        main, footer { animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        nav { animation: fadeIn 0.8s ease-in forwards; }
+        @keyframes smoothLoad { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Solid Panels (Replaces Glassmorphism, preserves contrast) */
+        .glass-panel { 
+            backdrop-filter: none !important; 
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+            background-color: rgba(255,255,255,0.9);
+            border-color: #e2e8f0;
+        }
+        html.dark .glass-panel {
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+            background-color: rgba(30,41,59,0.9);
+            border-color: #334155;
         }
 
-        html.dark {
-            background-color: #0f172a;
+        /* Flat Cards (Replaces Neumorphism) */
+        .omni-card { 
+            position: relative; 
+            border-radius: 0.5rem; 
+            z-index: 1; 
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); 
+            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s; 
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
         }
-
-        /* Prevent position:fixed breaking by keeping transform off the body */
-        main,
-        footer {
-            animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .omni-card::before { display: none !important; }
+        .omni-card:hover { 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
+            transform: translateY(-2px); 
+            border-color: rgba(0,0,0,0.15);
         }
-
-        nav {
-            animation: fadeIn 0.8s ease-in forwards;
-        }
-
-        @keyframes smoothLoad {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Glassmorphism */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        html:not(.dark) .glass-panel {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-        }
-
-        /* Omni-Card */
-        .omni-card {
-            position: relative;
+        html.dark .omni-card {
             background-color: #1e293b;
-            border-radius: 1.5rem;
-            z-index: 1;
-            box-shadow: 10px 10px 20px #131a25, -10px -10px 20px #293851;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-color: #334155;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+        }
+        html.dark .omni-card:hover { 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4); 
+            border-color: rgba(255,255,255,0.2);
         }
 
-        html:not(.dark) .omni-card {
-            background-color: #f1f5f9;
-            box-shadow: 10px 10px 20px #cbd5e1, -10px -10px 20px #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+        /* Flat Buttons (Replaces Claymorphism) */
+        .clay-btn { 
+            border-radius: 0.375rem !important; 
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); 
+            transition: background-color 0.2s, box-shadow 0.2s; 
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+        }
+        .clay-btn:hover { 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); 
+            transform: none !important; 
+            background-color: #2563eb;
         }
 
-        .omni-card::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 1.6rem;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-            z-index: -1;
-            opacity: 0;
-            filter: blur(12px);
-            transition: opacity 0.5s ease;
+        /* Clean Links */
+        .premium-nav-link { 
+            position: relative; 
+            padding: 0.5rem 1rem; 
+            z-index: 1; 
+            transition: color 0.2s; 
+            font-weight: 600; 
+            text-shadow: none !important; 
+        }
+        .premium-nav-link::before { display: none !important; }
+        .premium-nav-link:hover { color: #3b82f6 !important; text-shadow: none !important; }
+
+        /* Solid Typography */
+        .text-gradient { 
+            color: #3b82f6 !important; 
+            background: none !important; 
+            -webkit-text-fill-color: #3b82f6 !important; 
+            text-shadow: none !important; 
         }
 
-        .omni-card:hover {
-            transform: translateY(-4px);
-        }
+        /* Disable Floating for Professional Look */
+        .animate-float, .animate-float-delayed { animation: none !important; transform: none !important; }
+        
+        /* Remove crazy colored glows */
+        [class*="shadow-[0_0_"] { box-shadow: none !important; }
 
-        .omni-card:hover::before {
-            opacity: 0.6;
-        }
-
-        /* Claymorphism Buttons */
-        .clay-btn {
-            background: #3b82f6;
-            border-radius: 1rem;
-            color: white;
-            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.3), inset -4px -4px 8px rgba(0, 0, 0, 0.2), 6px 6px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .clay-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.3), 8px 8px 20px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Nav Link Hover */
-        .premium-nav-link {
-            position: relative;
-            padding: 0.5rem 1rem;
-            z-index: 1;
-            transition: color 0.3s, text-shadow 0.3s;
-            font-weight: 700;
-        }
-
-        .premium-nav-link::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(59, 130, 246, 0.15);
-            border-radius: 9999px;
-            transform: scale(0.8);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: -1;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .premium-nav-link:hover::before {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .premium-nav-link:hover {
-            color: #3b82f6;
-            text-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-        }
-
-        /* Typography & Utilities */
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-        }
-
-        .animate-float {
-            animation: float 8s ease-in-out infinite;
-        }
+        /* Infinite Marquee */
+        .marquee-wrapper { display: flex; overflow: hidden; white-space: nowrap; mask-image: none !important; -webkit-mask-image: none !important; }
+        .marquee-content { display: flex; animation: marquee 25s linear infinite; }
+        .marquee-content:hover { animation-play-state: paused; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 
     <!-- Theme Script -->
@@ -340,9 +285,7 @@
 
         <!-- Header Section -->
         <section class="max-w-7xl mx-auto px-4 mb-16 relative">
-            <div
-                class="absolute -top-10 left-1/2 -translate-x-1/2 w-[80%] h-40 bg-brand/10 blur-[100px] rounded-full pointer-events-none">
-            </div>
+            
             <div class="text-center relative z-10 mb-10">
                 <div
                     class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-brand/10 border border-brand/30 text-brand font-bold text-xs uppercase tracking-widest shadow-sm">
@@ -440,9 +383,7 @@
                     <div
                         class="glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-white/20 shadow-xl relative overflow-hidden h-full">
                         <!-- Decorative background element -->
-                        <div
-                            class="absolute -right-20 -top-20 w-64 h-64 bg-brand/10 blur-[80px] rounded-full pointer-events-none">
-                        </div>
+                        
 
                         <h2 class="text-3xl font-black mb-8 tracking-tight relative z-10">Send us a message</h2>
 
@@ -536,9 +477,7 @@
 
                     <div
                         class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group">
-                        <div
-                            class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand/20 blur-[50px] rounded-full pointer-events-none group-hover:bg-brand/40 transition-colors duration-500">
-                        </div>
+                        
                         <h4 class="font-black text-xl mb-4 flex items-center gap-3"><i
                                 class="fas fa-map-marker-alt text-brand"></i> Headquarters</h4>
                         <p class="font-bold opacity-80 leading-relaxed text-sm md:text-base mb-6">
@@ -679,3 +618,5 @@
 </body>
 
 </html>
+
+
