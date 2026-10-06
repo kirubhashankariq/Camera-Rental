@@ -121,7 +121,7 @@
         .marquee-content { display: flex; animation: marquee 25s linear infinite; }
         .marquee-content:hover { animation-play-state: paused; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    </style>
+    .toast-hidden { opacity: 0; pointer-events: none; transform: translateX(100%); } .toast-visible { opacity: 1; pointer-events: auto; transform: translateX(0); }</style>
 
     <!-- Theme Script -->
     <script>
@@ -157,19 +157,14 @@
                     <a href="index.html" class="flex items-center gap-3 text-2xl font-black group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                <path fill-rule="evenodd"
-                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <i class="fas fa-camera text-white text-xl"></i>
                         </div>
-                        <span class="text-gradient tracking-tight">OmniLens</span>
+                        OmniLens
                     </a>
                 </div>
 
                 <!-- Desktop Links -->
-                <div class="hidden xl:block">
+                <div class="hidden lg:block">
                     <div class="ml-6 flex items-center space-x-1">
                         <div class="relative group py-4">
                             <button class="premium-nav-link inline-flex items-center gap-2 whitespace-nowrap">
@@ -195,10 +190,10 @@
                 </div>
 
                 <!-- Desktop Actions -->
-                <div class="hidden xl:flex items-center space-x-3">
+                <div class="hidden lg:flex items-center space-x-3">
                     <button id="rtl-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all text-sm font-bold shadow-sm"
-                        title="Toggle RTL"><i class="fas fa-language"></i></button>
+                        title="Toggle RTL"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
                     <button id="theme-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm"
                         title="Toggle Theme">
@@ -227,7 +222,7 @@
                 </div>
 
                 <!-- Mobile Toggle & Cart -->
-                <div class="xl:hidden flex items-center gap-3">
+                <div class="lg:hidden flex items-center gap-3">
                     <!-- CART ICON (Mobile) -->
                     <a href="cart.html"
                         class="relative w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"
@@ -251,7 +246,7 @@
 
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu"
-            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto xl:hidden">
+            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto lg:hidden">
             <div class="px-6 pt-4 pb-8 space-y-3">
                 <a href="index.html"
                     class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 1
@@ -273,8 +268,7 @@
 
                 <div class="border-t border-gray-200 dark:border-white/10 mt-6 pt-6 flex gap-4">
                     <button id="mobile-rtl-toggle"
-                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i
-                            class="fas fa-exchange-alt"></i> RTL</button>
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
                     <button id="mobile-theme-toggle"
                         class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10">
                         <i class="fas fa-moon dark:hidden"></i><i
@@ -325,7 +319,7 @@
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Full Name
                                 *</label>
-                            <input type="text" id="checkout-name" required placeholder="John Doe"
+                            <input type="text" id="checkout-name" required placeholder="John Doe" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
                                 class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
                         </div>
                         <!-- Email Address -->
@@ -339,7 +333,7 @@
                         <div class="flex flex-col gap-2 md:col-span-2">
                             <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Phone Number
                                 *</label>
-                            <input type="tel" id="checkout-phone" required placeholder="(555) 123-4567"
+                            <input type="tel" id="checkout-phone" required placeholder="(555) 123-4567" oninput="this.value=this.value.replace(/[^0-9\-\+\(\)\s]/g,'')"
                                 class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
                         </div>
                         <!-- Delivery Address -->
@@ -352,14 +346,14 @@
                         <!-- City -->
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">City *</label>
-                            <input type="text" id="checkout-city" required placeholder="Los Angeles"
+                            <input type="text" id="checkout-city" required placeholder="Los Angeles" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
                                 class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
                         </div>
                         <!-- Pincode -->
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Pincode / ZIP
                                 *</label>
-                            <input type="text" id="checkout-zip" required placeholder="90028"
+                            <input type="text" id="checkout-zip" required placeholder="90028" oninput="this.value=this.value.replace(/[^0-9\-]/g,'')"
                                 class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
                         </div>
                     </div>
@@ -413,15 +407,15 @@
                                 </div>
                                 <div id="card-details" class="payment-details active px-4 pb-4">
                                     <div class="pt-2 border-t border-gray-300/30 dark:border-white/10 space-y-3">
-                                        <input type="text" placeholder="Card Number"
+                                        <input type="text" placeholder="Card Number" pattern="\d*" maxlength="16" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
                                             class="w-full bg-white/50 dark:bg-black/20 border border-gray-300/50 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-bold outline-none focus:border-brand">
                                         <div class="flex gap-3">
-                                            <input type="text" placeholder="MM/YY"
+                                            <input type="text" placeholder="MM/YY" maxlength="5" oninput="this.value=this.value.replace(/[^0-9/]/g,'')"
                                                 class="w-1/2 bg-white/50 dark:bg-black/20 border border-gray-300/50 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-bold outline-none focus:border-brand">
-                                            <input type="text" placeholder="CVV"
+                                            <input type="password" placeholder="CVV" maxlength="4" pattern="\d*" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
                                                 class="w-1/2 bg-white/50 dark:bg-black/20 border border-gray-300/50 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-bold outline-none focus:border-brand">
                                         </div>
-                                        <input type="text" placeholder="Name on Card"
+                                        <input type="text" placeholder="Name on Card" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
                                             class="w-full bg-white/50 dark:bg-black/20 border border-gray-300/50 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-bold outline-none focus:border-brand">
                                     </div>
                                 </div>
@@ -503,14 +497,9 @@
                     <a href="index.html" class="flex items-center gap-3 text-3xl font-black group mb-8">
                         <div
                             class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                <path fill-rule="evenodd"
-                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <i class="fas fa-camera text-white text-xl"></i>
                         </div>
-                        <span class="text-gradient">OmniLens</span>
+                        OmniLens
                     </a>
 
                     <div
@@ -536,7 +525,7 @@
 
                 <!-- Links 1 -->
                 <div class="lg:col-span-2 lg:col-start-7 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-brand">Platform</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Platform</h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
                         <li><a href="catalog.html"
                                 class="hover:text-brand transition-all inline-block hover:translate-x-2">Equipment
@@ -555,7 +544,7 @@
 
                 <!-- Links 2 -->
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-purple-500">Company</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Company</h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
                         <li><a href="#"
                                 class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Help
@@ -574,7 +563,7 @@
 
                 <!-- Social Icons -->
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-pink-500">Socials</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Socials</h4>
                     <div class="flex flex-wrap gap-4">
                         <a href="https://x.com" target="_blank" rel="noopener noreferrer"
                             class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all">
@@ -640,7 +629,9 @@
                         const isRtl = html.getAttribute('dir') === 'rtl';
                         const newDir = isRtl ? 'ltr' : 'rtl';
                         html.setAttribute('dir', newDir);
-                        body.setAttribute('dir', newDir);
+                                                body.setAttribute('dir', newDir);
+                        
+                        // Icon remains constant as a universal toggle
                     });
                 }
             });
@@ -686,32 +677,9 @@
             // 1. Load cart from local storage. If it's completely empty, fallback to demo items JUST for display purposes.
             // When we link the catalog page, this will pull real items!
             let cartItems = JSON.parse(localStorage.getItem('omni_cart'));
+if (cartItems && cartItems.length === 2 && cartItems[0].name === 'RED V-Raptor 8K VV') { cartItems = []; localStorage.removeItem('omni_cart'); }
 
-            if (!cartItems || cartItems.length === 0) {
-                // Fallback demo items so the page isn't empty on first load.
-                cartItems = [
-                    {
-                        id: 1,
-                        name: 'RED V-Raptor 8K VV',
-                        type: 'Cinema Camera',
-                        pricePerDay: 400,
-                        deposit: 1500,
-                        days: 1,
-                        img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-                    },
-                    {
-                        id: 2,
-                        name: 'Aputure LS 1200d Pro',
-                        type: 'Studio Lighting',
-                        pricePerDay: 180,
-                        deposit: 300,
-                        days: 2,
-                        img: 'https://images.unsplash.com/photo-1527011045974-4569cc060411?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-                    }
-                ];
-                // Save demo items to local storage so they persist
-                localStorage.setItem('omni_cart', JSON.stringify(cartItems));
-            }
+            if (!cartItems) { cartItems = []; }
 
             const cartContainer = document.getElementById('cart-container');
             const summarySubtotal = document.getElementById('summary-subtotal');
@@ -903,5 +871,17 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 

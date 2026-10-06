@@ -146,19 +146,14 @@
                     <a href="index.html" class="flex items-center gap-3 text-2xl font-black group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                <path fill-rule="evenodd"
-                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <i class="fas fa-camera text-white text-xl"></i>
                         </div>
-                        <span class="text-gradient tracking-tight">OmniLens</span>
+                        OmniLens
                     </a>
                 </div>
 
                 <!-- Desktop Links -->
-                <div class="hidden xl:block">
+                <div class="hidden lg:block">
                     <div class="ml-6 flex items-center space-x-1">
                         <div class="relative group py-4">
                             <button class="premium-nav-link inline-flex items-center gap-2 whitespace-nowrap">
@@ -184,10 +179,10 @@
                 </div>
 
                 <!-- Desktop Actions -->
-                <div class="hidden xl:flex items-center space-x-3">
+                <div class="hidden lg:flex items-center space-x-3">
                     <button id="rtl-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all text-sm font-bold shadow-sm"
-                        title="Toggle RTL"><i class="fas fa-language"></i></button>
+                        title="Toggle RTL"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
                     <button id="theme-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm"
                         title="Toggle Theme">
@@ -210,7 +205,7 @@
                 </div>
 
                 <!-- Mobile Toggle & Cart -->
-                <div class="xl:hidden flex items-center gap-3">
+                <div class="lg:hidden flex items-center gap-3">
                     <a href="cart.html"
                         class="relative w-12 h-12 rounded-full glass-panel flex items-center justify-center text-xl hover:text-brand transition-colors shadow-sm"
                         title="View Cart">
@@ -225,7 +220,7 @@
 
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu"
-            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto xl:hidden">
+            class="hidden absolute top-full left-0 w-full bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-3xl border-b border-gray-200 dark:border-white/10 shadow-2xl max-h-[85vh] overflow-y-auto lg:hidden">
             <div class="px-6 pt-4 pb-8 space-y-3">
                 <a href="index.html"
                     class="block px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 font-bold">Home 1
@@ -247,8 +242,7 @@
 
                 <div class="border-t border-gray-200 dark:border-white/10 mt-6 pt-6 flex gap-4">
                     <button id="mobile-rtl-toggle"
-                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i
-                            class="fas fa-exchange-alt"></i> RTL</button>
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
                     <button id="mobile-theme-toggle"
                         class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10">
                         <i class="fas fa-moon dark:hidden"></i><i
@@ -297,7 +291,7 @@
                     <div>
                         <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1 mb-1 block">Full
                             Name</label>
-                        <input type="text" required placeholder="Alex Director"
+                        <input type="text" required placeholder="Alex Director" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
                             class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/30 dark:border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-brand transition-colors font-bold text-sm placeholder:opacity-50">
                     </div>
 
@@ -365,14 +359,9 @@
                     <a href="index.html" class="flex items-center gap-3 text-3xl font-black group mb-8">
                         <div
                             class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30 transform group-hover:rotate-[15deg] transition-transform duration-500">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                <path fill-rule="evenodd"
-                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s-.002 3.254-.42 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-4.812.419-4.812.419s-3.252 0-4.812-.419a2.505 2.505 0 01-1.768-1.768C8.002 15.254 8 12 8 12s.002-3.254.42-4.814a2.504 2.504 0 011.768-1.768C11.748 5.001 15 5.001 15 5.001s3.252 0 4.812.417zM15 17a5 5 0 100-10 5 5 0 000 10z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <i class="fas fa-camera text-white text-xl"></i>
                         </div>
-                        <span class="text-gradient">OmniLens</span>
+                        OmniLens
                     </a>
 
                     <div
@@ -397,7 +386,7 @@
                 </div>
 
                 <div class="lg:col-span-2 lg:col-start-7 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-brand">Platform</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Platform</h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
                         <li><a href="catalog.html"
                                 class="hover:text-brand transition-all inline-block hover:translate-x-2">Equipment
@@ -415,7 +404,7 @@
                 </div>
 
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-purple-500">Company</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Company</h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
                         <li><a href="#"
                                 class="hover:text-purple-500 transition-all inline-block hover:translate-x-2">Help
@@ -433,7 +422,7 @@
                 </div>
 
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-pink-500">Socials</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Socials</h4>
                     <div class="flex flex-wrap gap-4">
                         <a href="https://x.com" target="_blank" rel="noopener noreferrer"
                             class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all"><i
@@ -490,7 +479,9 @@
                         const isRtl = html.getAttribute('dir') === 'rtl';
                         const newDir = isRtl ? 'ltr' : 'rtl';
                         html.setAttribute('dir', newDir);
-                        body.setAttribute('dir', newDir);
+                                                body.setAttribute('dir', newDir);
+                        
+                        // Icon remains constant as a universal toggle
                     });
                 }
             });
@@ -507,5 +498,14 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
 
 
