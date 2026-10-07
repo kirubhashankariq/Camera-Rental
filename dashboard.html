@@ -24,103 +24,217 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Omnimorphic CSS Architecture -->
-                <style>
+    <style>
         /* Professional Architecture */
-        html { background-color: #f8fafc; scroll-behavior: smooth; }
-        html.dark { background-color: #0f172a; }
+        html {
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        html.dark {
+            background-color: #0f172a;
+        }
 
         /* Clean up animations */
-        main, footer { animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        nav { animation: fadeIn 0.8s ease-in forwards; }
-        @keyframes smoothLoad { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        main,
+        footer {
+            animation: smoothLoad 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-        /* Solid Panels (Replaces Glassmorphism, preserves contrast) */
-        .glass-panel { 
-            backdrop-filter: none !important; 
+        nav {
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+
+        @keyframes smoothLoad {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Solid Panels */
+        .glass-panel {
+            backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
-            background-color: rgba(255,255,255,0.9);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            background-color: rgba(255, 255, 255, 0.9);
             border-color: #e2e8f0;
         }
+
         html.dark .glass-panel {
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-            background-color: rgba(30,41,59,0.9);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            background-color: rgba(30, 41, 59, 0.9);
             border-color: #334155;
         }
 
-        /* Flat Cards (Replaces Neumorphism) */
-        .omni-card { 
-            position: relative; 
-            border-radius: 0.5rem; 
-            z-index: 1; 
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); 
-            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s; 
+        /* Flat Cards */
+        .omni-card {
+            position: relative;
+            border-radius: 0.5rem;
+            z-index: 1;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
         }
-        .omni-card::before { display: none !important; }
-        .omni-card:hover { 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
-            transform: translateY(-2px); 
-            border-color: rgba(0,0,0,0.15);
+
+        .omni-card::before {
+            display: none !important;
         }
+
+        .omni-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
         html.dark .omni-card {
             background-color: #1e293b;
             border-color: #334155;
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
-        }
-        html.dark .omni-card:hover { 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4); 
-            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* Flat Buttons (Replaces Claymorphism) */
-        .clay-btn { 
-            border-radius: 0.375rem !important; 
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); 
-            transition: background-color 0.2s, box-shadow 0.2s; 
+        html.dark .omni-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Flat Buttons */
+        .clay-btn {
+            border-radius: 0.375rem !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: background-color 0.2s, box-shadow 0.2s;
             background-color: #3b82f6;
             color: #ffffff;
             border: none;
         }
-        .clay-btn:hover { 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); 
-            transform: none !important; 
+
+        .clay-btn:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: none !important;
             background-color: #2563eb;
         }
 
         /* Clean Links */
-        .premium-nav-link { 
-            position: relative; 
-            padding: 0.5rem 1rem; 
-            z-index: 1; 
-            transition: color 0.2s; 
-            font-weight: 600; 
-            text-shadow: none !important; 
+        .premium-nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            z-index: 1;
+            transition: color 0.2s;
+            font-weight: 600;
+            text-shadow: none !important;
         }
-        .premium-nav-link::before { display: none !important; }
-        .premium-nav-link:hover { color: #3b82f6 !important; text-shadow: none !important; }
+
+        .premium-nav-link::before {
+            display: none !important;
+        }
+
+        .premium-nav-link:hover {
+            color: #3b82f6 !important;
+            text-shadow: none !important;
+        }
 
         /* Solid Typography */
-        .text-gradient { 
-            color: #3b82f6 !important; 
-            background: none !important; 
-            -webkit-text-fill-color: #3b82f6 !important; 
-            text-shadow: none !important; 
+        .text-gradient {
+            color: #3b82f6 !important;
+            background: none !important;
+            -webkit-text-fill-color: #3b82f6 !important;
+            text-shadow: none !important;
         }
 
-        /* Disable Floating for Professional Look */
-        .animate-float, .animate-float-delayed { animation: none !important; transform: none !important; }
-        
-        /* Remove crazy colored glows */
-        [class*="shadow-[0_0_"] { box-shadow: none !important; }
+        /* Disable Floating */
+        .animate-float,
+        .animate-float-delayed {
+            animation: none !important;
+            transform: none !important;
+        }
 
-        /* Infinite Marquee */
-        .marquee-wrapper { display: flex; overflow: hidden; white-space: nowrap; mask-image: none !important; -webkit-mask-image: none !important; }
-        .marquee-content { display: flex; animation: marquee 25s linear infinite; }
-        .marquee-content:hover { animation-play-state: paused; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        [class*="shadow-[0_0_"] {
+            box-shadow: none !important;
+        }
+
+        .marquee-wrapper {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            mask-image: none !important;
+            -webkit-mask-image: none !important;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Dashboard Tables */
+        .omni-table th {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .omni-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .omni-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Toast Animation Classes */
+        .toast-hidden {
+            transform: translateX(150%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toast-visible {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 
     <!-- Theme Script -->
@@ -135,6 +249,16 @@
 </head>
 
 <body class="antialiased transition-colors duration-300 text-gray-900 dark:text-gray-100 overflow-x-hidden" dir="ltr">
+
+    <!-- Global Toast Notification System -->
+    <div id="toast-notification"
+        class="fixed top-24 right-4 z-[99999] toast-hidden transition-all duration-500 ease-out glass-panel border border-green-500/50 p-5 rounded-2xl shadow-2xl flex items-center gap-4 bg-green-500/10 backdrop-blur-3xl max-w-sm w-full">
+        <i class="fas fa-check-circle text-green-500 text-4xl"></i>
+        <div>
+            <h4 id="toast-title" class="font-black text-lg text-green-500">Success!</h4>
+            <p id="toast-message" class="font-bold opacity-80 text-sm leading-tight">Action completed successfully.</p>
+        </div>
+    </div>
 
     <!-- Fully Fixed Responsive Navigation -->
     <nav
@@ -183,7 +307,8 @@
                 <div class="hidden lg:flex items-center space-x-3">
                     <button id="rtl-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all text-sm font-bold shadow-sm"
-                        title="Toggle RTL"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
+                        title="Toggle RTL"><i class="fas fa-exchange-alt text-lg"
+                            title="Toggle RTL/LTR Direction"></i></button>
                     <button id="theme-toggle"
                         class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:bg-brand/20 hover:text-brand transition-all shadow-sm"
                         title="Toggle Theme">
@@ -258,11 +383,12 @@
 
                 <div class="border-t border-gray-200 dark:border-white/10 mt-6 pt-6 flex gap-4">
                     <button id="mobile-rtl-toggle"
-                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
+                        class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10"><i
+                            class="fas fa-exchange-alt text-lg" title="Toggle RTL/LTR Direction"></i></button>
                     <button id="mobile-theme-toggle"
                         class="flex-1 py-3 rounded-xl border border-gray-200 dark:border-white/10 font-bold flex justify-center items-center gap-2 hover:bg-brand/10">
-                        <i class="fas fa-moon dark:hidden"></i><i
-                            class="fas fa-sun hidden dark:inline text-brand"></i> Theme
+                        <i class="fas fa-moon dark:hidden"></i><i class="fas fa-sun hidden dark:inline text-brand"></i>
+                        Theme
                     </button>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 mt-4">
@@ -280,7 +406,7 @@
 
         <!-- Dashboard Header -->
         <div class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 relative">
-            
+
             <div class="relative z-10">
                 <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2">Welcome back, Alex!</h1>
                 <p class="opacity-70 font-bold text-sm md:text-base">Manage your active rentals, deposits, and account
@@ -302,10 +428,7 @@
                         <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80"
                             alt="Profile Avatar"
                             class="w-full h-full rounded-2xl object-cover shadow-lg border-2 border-brand/50">
-                        <div
-                            class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center border-2 border-[#1e293b] cursor-pointer hover:scale-110 transition-transform">
-                            <i class="fas fa-pen text-xs"></i>
-                        </div>
+                        
                     </div>
                     <h3 class="font-black text-xl mb-1">Alex Director</h3>
                     <p class="text-xs font-bold text-brand uppercase tracking-widest mb-4">Pro Member</p>
@@ -326,9 +449,6 @@
                         <li><a href="#" data-target="tab-rentals"
                                 class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 font-bold transition-colors"><i
                                     class="fas fa-video w-5 opacity-70"></i> My Rentals</a></li>
-                        <li><a href="#" data-target="tab-calendar"
-                                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 font-bold transition-colors"><i
-                                    class="fas fa-calendar-alt w-5 opacity-70"></i> Booking Calendar</a></li>
                         <li><a href="#" data-target="tab-insurance"
                                 class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 font-bold transition-colors"><i
                                     class="fas fa-shield-alt w-5 opacity-70"></i> Insurance & COI</a></li>
@@ -385,7 +505,7 @@
 
                     <!-- Active Rentals Widget -->
                     <div class="omni-card p-6 md:p-8 border border-white/5 relative overflow-hidden">
-                        
+
                         <div class="flex justify-between items-center mb-6 relative z-10">
                             <h2 class="text-2xl font-black"><i class="fas fa-clock text-brand mr-2"></i> Current Rental
                             </h2>
@@ -410,13 +530,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-3 w-full md:w-auto">
-                                <button
-                                    class="w-full clay-btn px-6 py-2.5 font-black text-xs uppercase tracking-widest rounded-xl">Extend
-                                    Rental</button>
-                                <button
-                                    class="w-full glass-panel px-6 py-2.5 font-black text-xs uppercase tracking-widest rounded-xl hover:bg-white/10 transition-colors">Instructions</button>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -445,10 +559,7 @@
                                     </div>
                                     <p class="text-xs font-bold opacity-70 mb-2">Order #OL-99382 • Oct 12 - Oct 15</p>
                                 </div>
-                                <div class="w-full md:w-auto text-center md:text-right">
-                                    <button
-                                        class="glass-panel text-xs px-4 py-2 rounded-lg font-bold hover:text-brand transition-colors w-full md:w-auto">Manage</button>
-                                </div>
+
                             </div>
 
                             <!-- Past Item -->
@@ -466,53 +577,13 @@
                                     </div>
                                     <p class="text-xs font-bold opacity-70 mb-2">Order #OL-88234 • Sep 10 - Sep 14</p>
                                 </div>
-                                <div class="w-full md:w-auto text-center md:text-right">
-                                    <button
-                                        class="glass-panel text-xs px-4 py-2 rounded-lg font-bold hover:text-brand transition-colors w-full md:w-auto">Rent
-                                        Again</button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. TAB: BOOKING CALENDAR -->
-                <div id="tab-calendar" class="dashboard-tab space-y-8 hidden animate-[fadeIn_0.4s_ease-out_forwards]">
-                    <div class="omni-card p-6 md:p-8 border border-white/5">
-                        <div class="flex justify-between items-center mb-8">
-                            <h2 class="text-2xl font-black"><i class="fas fa-calendar-alt text-brand mr-2"></i> Schedule
-                            </h2>
-                            <div class="flex gap-2">
-                                <button id="cal-prev"
-                                    class="w-8 h-8 rounded-full glass-panel flex items-center justify-center hover:text-brand transition-colors"><i
-                                        class="fas fa-chevron-left"></i></button>
-                                <button id="cal-next"
-                                    class="w-8 h-8 rounded-full glass-panel flex items-center justify-center hover:text-brand transition-colors"><i
-                                        class="fas fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-
-                        <div id="cal-month-year" class="text-center mb-4 font-black text-xl"></div>
-
-                        <!-- Static Days Header -->
-                        <div class="grid grid-cols-7 gap-2 md:gap-4 text-center mb-2">
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Sun</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Mon</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Tue</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Wed</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Thu</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Fri</div>
-                            <div class="text-xs font-bold opacity-50 uppercase pb-2">Sat</div>
-                        </div>
-
-                        <!-- Dynamic Days Grid -->
-                        <div id="cal-grid" class="grid grid-cols-7 gap-2 md:gap-4 text-center">
-                            <!-- JavaScript will populate the days here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. TAB: INSURANCE -->
+                <!-- 3. TAB: INSURANCE -->
                 <div id="tab-insurance" class="dashboard-tab space-y-8 hidden animate-[fadeIn_0.4s_ease-out_forwards]">
                     <div class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 shadow-xl">
                         <div class="flex justify-between items-center mb-8">
@@ -530,19 +601,23 @@
                             </div>
                         </div>
 
-                        <div
+                        <!-- Hidden File Input for actual uploading -->
+                        <input type="file" id="coi-file-input" class="hidden" accept=".pdf,.doc,.docx,.jpg,.png">
+
+                        <div id="upload-dropzone" onclick="document.getElementById('coi-file-input').click()"
                             class="border-2 border-dashed border-gray-300/30 dark:border-white/20 rounded-[2rem] p-10 text-center hover:border-brand/50 transition-colors cursor-pointer bg-black/5 dark:bg-white/5">
                             <i class="fas fa-cloud-upload-alt text-4xl text-brand mb-4"></i>
                             <h3 class="font-black text-lg mb-2">Upload New Certificate</h3>
                             <p class="text-sm font-bold opacity-60 mb-6">Drag and drop your PDF here, or click to
                                 browse.</p>
-                            <button class="clay-btn px-6 py-2.5 text-xs font-black uppercase tracking-widest">Select
+                            <button type="button"
+                                class="clay-btn px-6 py-2.5 text-xs font-black uppercase tracking-widest pointer-events-none">Select
                                 File</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. TAB: INVOICES -->
+                <!-- 4. TAB: INVOICES -->
                 <div id="tab-invoices" class="dashboard-tab space-y-8 hidden animate-[fadeIn_0.4s_ease-out_forwards]">
                     <div class="omni-card p-6 md:p-8 border border-white/5">
                         <div class="flex justify-between items-center mb-8">
@@ -570,7 +645,7 @@
                                                 class="bg-green-500/20 text-green-500 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider">Paid</span>
                                         </td>
                                         <td class="text-right"><button
-                                                class="w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
+                                                class="download-invoice-btn w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
                                                     class="fas fa-download"></i></button></td>
                                     </tr>
                                     <tr class="hover:bg-white/5 transition-colors group">
@@ -581,7 +656,7 @@
                                                 class="bg-green-500/20 text-green-500 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider">Paid</span>
                                         </td>
                                         <td class="text-right"><button
-                                                class="w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
+                                                class="download-invoice-btn w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
                                                     class="fas fa-download"></i></button></td>
                                     </tr>
                                     <tr class="hover:bg-white/5 transition-colors group">
@@ -592,7 +667,7 @@
                                                 class="bg-green-500/20 text-green-500 px-2 py-1 rounded-md text-[10px] uppercase tracking-wider">Paid</span>
                                         </td>
                                         <td class="text-right"><button
-                                                class="w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
+                                                class="download-invoice-btn w-8 h-8 rounded-full glass-panel text-gray-400 group-hover:text-brand transition-colors"><i
                                                     class="fas fa-download"></i></button></td>
                                     </tr>
                                 </tbody>
@@ -601,19 +676,19 @@
                     </div>
                 </div>
 
-                <!-- 6. TAB: SETTINGS -->
+                <!-- 5. TAB: SETTINGS -->
                 <div id="tab-settings" class="dashboard-tab space-y-8 hidden animate-[fadeIn_0.4s_ease-out_forwards]">
                     <div class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 shadow-xl">
                         <h2 class="text-2xl font-black mb-8"><i class="fas fa-cog text-brand mr-2"></i> Account Settings
                         </h2>
 
-                        <form class="space-y-6"
-                            onsubmit="event.preventDefault(); alert('Settings saved successfully!');">
+                        <form id="settings-form" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="flex flex-col gap-2">
                                     <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Full
                                         Name</label>
-                                    <input type="text" value="Alex Director" oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
+                                    <input type="text" value="Alex Director"
+                                        oninput="this.value=this.value.replace(/[^a-zA-Z\s]/g,'')"
                                         class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm">
                                 </div>
                                 <div class="flex flex-col gap-2">
@@ -625,7 +700,8 @@
                                 <div class="flex flex-col gap-2">
                                     <label class="text-xs font-black uppercase tracking-widest opacity-70 ml-1">Phone
                                         Number</label>
-                                    <input type="tel" value="(310) 555-0199" oninput="this.value=this.value.replace(/[^0-9\-\+\(\)\s]/g,'')"
+                                    <input type="tel" value="(310) 555-0199"
+                                        oninput="this.value=this.value.replace(/[^0-9\-\+\(\)\s]/g,'')"
                                         class="w-full bg-black/5 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-brand transition-colors font-bold text-sm">
                                 </div>
                                 <div class="flex flex-col gap-2">
@@ -672,7 +748,7 @@
         class="mt-10 md:mt-20 relative z-10 overflow-hidden rounded-t-[2rem] md:rounded-t-[3rem] border-t border-white/10">
         <!-- Visual Map Background Overlay -->
         <div class="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-20 z-0 pointer-events-none grayscale mix-blend-overlay"
-            style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+            style="background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1920&q=80');">
         </div>
         <div
             class="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/95 to-[#f8fafc]/80 dark:from-[#0f172a] dark:via-[#0f172a]/95 dark:to-[#0f172a]/80 z-0">
@@ -692,7 +768,7 @@
 
                     <div
                         class="glass-panel p-6 md:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group">
-                        
+
                         <h4 class="font-black text-xl mb-4 flex items-center gap-3"><i
                                 class="fas fa-map-marker-alt text-brand"></i> Headquarters</h4>
                         <p class="font-bold opacity-80 leading-relaxed text-sm md:text-base mb-6">
@@ -713,7 +789,8 @@
 
                 <!-- Links 1 -->
                 <div class="lg:col-span-2 lg:col-start-7 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Platform</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Platform
+                    </h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
                         <li><a href="catalog.html"
                                 class="hover:text-brand transition-all inline-block hover:translate-x-2">Equipment
@@ -732,26 +809,26 @@
 
                 <!-- Links 2 -->
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Company</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Company
+                    </h4>
                     <ul class="space-y-4 md:space-y-5 font-bold opacity-80 text-sm md:text-base">
-                        <li><a href="#"
-                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Help
+                        <li><a href="pricing.html#faq" class="hover:text-brand transition-all inline-block hover:translate-x-2">Help
                                 Center / FAQ</a></li>
-                        <li><a href="#"
+                        <li><a href="pricing.html#insurance"
                                 class="hover:text-brand transition-all inline-block hover:translate-x-2">Insurance
                                 Policies</a></li>
-                        <li><a href="#"
-                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Terms of
+                        <li><a href="pricing.html" class="hover:text-brand transition-all inline-block hover:translate-x-2">Terms
+                                of
                                 Service</a></li>
-                        <li><a href="#"
-                                class="hover:text-brand transition-all inline-block hover:translate-x-2">Contact
+                        <li><a href="contact.html" class="hover:text-brand transition-all inline-block hover:translate-x-2">Contact
                                 Us</a></li>
                     </ul>
                 </div>
 
                 <!-- Social Icons -->
                 <div class="lg:col-span-2 pt-4">
-                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Socials</h4>
+                    <h4 class="font-black text-sm mb-8 uppercase tracking-widest text-gray-900 dark:text-white">Socials
+                    </h4>
                     <div class="flex flex-wrap gap-4">
                         <a href="https://x.com" target="_blank" rel="noopener noreferrer"
                             class="w-12 h-12 rounded-[1rem] omni-card flex items-center justify-center text-xl hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all">
@@ -792,6 +869,21 @@
 
     <!-- Integrated JS -->
     <script>
+        // Universal Toast Function
+        function showToast(title, message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+
+            toast.classList.remove('toast-hidden');
+            toast.classList.add('toast-visible');
+
+            setTimeout(() => {
+                toast.classList.remove('toast-visible');
+                toast.classList.add('toast-hidden');
+            }, 3500);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const html = document.documentElement;
             const body = document.body;
@@ -815,9 +907,7 @@
                         const isRtl = html.getAttribute('dir') === 'rtl';
                         const newDir = isRtl ? 'ltr' : 'rtl';
                         html.setAttribute('dir', newDir);
-                                                body.setAttribute('dir', newDir);
-                        
-                        // Icon remains constant as a universal toggle
+                        body.setAttribute('dir', newDir);
                     });
                 }
             });
@@ -883,93 +973,52 @@
                 });
             });
 
-        });
+            // ---- Interactive Backend Feature Simulators ----
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthYearText = document.getElementById('cal-month-year');
-            const calGrid = document.getElementById('cal-grid');
-            const prevBtn = document.getElementById('cal-prev');
-            const nextBtn = document.getElementById('cal-next');
-
-            // Only run if the calendar exists on the page
-            if (!monthYearText || !calGrid || !prevBtn || !nextBtn) return;
-
-            let currentDate = new Date();
-            let currentMonth = currentDate.getMonth();
-            let currentYear = currentDate.getFullYear();
-
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-            function renderCalendar(month, year) {
-                calGrid.innerHTML = '';
-                monthYearText.textContent = `${monthNames[month]} ${year}`;
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                const today = new Date();
-                const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
-
-                // Add empty slots for the days before the 1st of the month
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyDiv = document.createElement('div');
-                    calGrid.appendChild(emptyDiv);
-                }
-
-                // Render actual days
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const dayDiv = document.createElement('div');
-
-                    if (isCurrentMonth && i === today.getDate()) {
-                        // Highlight today's date
-                        dayDiv.className = 'aspect-square flex flex-col items-center justify-center rounded-xl bg-brand/20 border border-brand/50 text-brand font-black relative shadow-lg cursor-pointer hover:bg-brand/30 transition-colors';
-                        dayDiv.innerHTML = `${i} <div class="w-1 h-1 bg-brand rounded-full absolute bottom-2"></div>`;
-                    } else {
-                        // Standard unbooked days
-                        dayDiv.className = 'aspect-square flex flex-col items-center justify-center rounded-xl glass-panel opacity-50 hover:opacity-100 hover:bg-white/5 cursor-pointer transition-all font-bold';
-                        dayDiv.textContent = i;
+            // 1. Insurance File Upload Simulation
+            const fileInput = document.getElementById('coi-file-input');
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        const fileName = e.target.files[0].name;
+                        showToast('Upload Successful', `File "${fileName}" has been sent for review.`);
+                        fileInput.value = ''; // Reset
                     }
-
-                    calGrid.appendChild(dayDiv);
-                }
+                });
             }
 
-            prevBtn.addEventListener('click', () => {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                renderCalendar(currentMonth, currentYear);
+            // 2. Invoice Download Simulation
+            document.querySelectorAll('.download-invoice-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const originalHtml = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+                    setTimeout(() => {
+                        this.innerHTML = originalHtml;
+                        showToast('Download Complete', 'Your invoice has been downloaded securely.');
+                    }, 800);
+                });
             });
 
-            nextBtn.addEventListener('click', () => {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                renderCalendar(currentMonth, currentYear);
-            });
+            // 3. Settings Save Form Simulation
+            const settingsForm = document.getElementById('settings-form');
+            if (settingsForm) {
+                settingsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const btn = settingsForm.querySelector('button[type="submit"]');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = 'Saving...';
 
-            // Initialize calendar on page load
-            renderCalendar(currentMonth, currentYear);
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        showToast('Settings Saved', 'Your account preferences have been updated.');
+                    }, 800);
+                });
+            }
+
         });
     </script>
-
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
